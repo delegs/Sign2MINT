@@ -1,0 +1,451 @@
+<!-- Mobile View -->
+<div *ngIf="!isDesktop">
+  <header>
+    <div class="header-content">
+      <div class="header-button"
+           (click)="backToPreviousSite()">
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+      </div>
+      <form>
+        <input #gebaerdensucheInput
+               (focus)="onFocus()"
+               (click)="setFocus(true)"
+               [(ngModel)]="searchContext.gebaerdenInput"
+               [readOnly]="true"
+               inputmode="none"
+               name="gebaerdensucheInput"/>
+
+        <div class="header-button form-button" (click)="clearSearch()">
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </div>
+      </form>
+
+      <div class="header-button" routerLink="/search/gebaerdensuche/filter">
+        <fa-icon [icon]="faFilter"></fa-icon>
+      </div>
+    </div>
+  </header>
+
+  <div class="bottom-content-container">
+
+    <div class="searchResultHeader">
+      <span *ngIf="this.searchContext.gebaerdenInput.length > 0"
+        class="resultCountEmpty resultCount">{{searchResultText}}</span>
+      <div *ngIf="this.searchContext.gebaerdenInput.length == 0" class="infoTextContainer">
+        <svg height="5rem"
+             viewBox="-9 -9 36 36"
+             opacity="0.5"
+             xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="18" fill="#2F9C91"/>
+          <path fill="white"
+                d="M12.987 3.39725V4.20584C14.323 3.74881 15.7644 4.73319 15.7644 6.20975V9.32559C15.4041 9.10766 15.0151 8.93262 14.6042 8.80757V6.20975C14.6042 4.87381 12.6706 4.90897 12.6706 6.20975V8.60304C12.3943 8.62599 12.1242 8.67074 11.862 8.73559V3.39725C11.862 2.06131 9.89327 2.02616 9.89327 3.36209V8.98709C9.89327 9.16288 9.7878 9.26834 9.61202 9.26834H9.36592C9.2253 9.26834 9.08467 9.16288 9.08467 8.98709V2.13162C9.08467 0.830844 7.15108 0.795687 7.15108 2.13162V8.98709C7.15108 9.16288 7.01045 9.26834 6.86983 9.26834H6.62373C6.44795 9.26834 6.34248 9.16288 6.34248 8.98709V3.43241C6.34248 2.09647 4.37373 2.06131 4.37373 3.39725V10.9207C4.37373 11.2019 4.02217 11.3074 3.88155 11.0613L2.89717 9.69022C2.58077 9.23319 1.94795 9.16288 1.52608 9.47928C1.1042 9.79569 0.998735 10.4285 1.31514 10.8504L5.6042 16.8621H9.01092C9.3438 17.297 9.74445 17.6772 10.1971 17.9871H5.46358C5.21748 17.9871 4.93623 17.8816 4.79561 17.6355L0.401079 11.5183C-0.26689 10.5691 -0.0911086 9.26834 0.85811 8.56522C1.59639 8.03788 2.54561 8.03788 3.24874 8.53006V3.39725C3.24874 1.88553 4.79561 0.866 6.13155 1.4285C6.76436 -0.434781 9.40108 -0.505094 10.1042 1.39334C11.4753 0.830844 12.987 1.88553 12.987 3.39725Z"/>
+          <path clip-rule="evenodd" fill="white"
+                d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+                fill-rule="evenodd"/>
+        </svg>
+        <span class="text-xl font-medium">DGS<fa-icon [icon]="faArrowRight"></fa-icon>Deutsch</span>
+        <a routerLink="/page/gebaerdensuchinformation"><u>Wie funktioniert die Gebärdensuche?</u></a>
+        <span class="font-light">Beschreibe die gesuchte Gebärde möglichst genau. Wende Filter an, um die Ergebnisse einzuschränken.</span>
+      </div>
+    </div>
+
+    <div class="card-container">
+      <div class="searchResult">
+        <ng-template ngFor let-entry [ngForOf]="searchContext.searchResultEntries" let-i="index">
+          <a
+            *ngIf="i <= visibleEndIndex"
+            href
+            onclick="return false;"
+            routerLink="/entry/{{entry.fachbegriff}}/{{entry.id}}">
+            <div class="outer-card font-normal text-lg">
+              <app-search-result-entry [lexikonEintrag]="entry"></app-search-result-entry>
+            </div>
+          </a>
+        </ng-template>
+        <div class="showMoreButton" *ngIf="visibleEndIndex < searchContext.searchResultEntries.length - 1"
+             (click)="showMore()">
+          Mehr anzeigen
+        </div>
+      </div>
+    </div>
+    <app-gebaerden-tastatur (buttonClicked)="onGebaerdenTastaturClick($event)"
+                            (isFocusChange)="isFocusChange($event)"
+                            [inputString]="searchContext.gebaerdenInput"
+                            [isFocus]="isFocus">
+    </app-gebaerden-tastatur>
+  </div>
+</div>
+
+<!-- Desktop View -->
+<div *ngIf="isDesktop">
+
+  <!-- Main-Header -->
+
+  <div class="main-grid bottom-content-container">
+
+    <!-- Search-Header -->
+    <div class="header text-xl font-medium">
+      <svg class="icon"
+           height="19"
+           viewBox="0 0 18 19"
+           width="18"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.987 3.39725V4.20584C14.323 3.74881 15.7644 4.73319 15.7644 6.20975V9.32559C15.4041 9.10766 15.0151 8.93262 14.6042 8.80757V6.20975C14.6042 4.87381 12.6706 4.90897 12.6706 6.20975V8.60304C12.3943 8.62599 12.1242 8.67074 11.862 8.73559V3.39725C11.862 2.06131 9.89327 2.02616 9.89327 3.36209V8.98709C9.89327 9.16288 9.7878 9.26834 9.61202 9.26834H9.36592C9.2253 9.26834 9.08467 9.16288 9.08467 8.98709V2.13162C9.08467 0.830844 7.15108 0.795687 7.15108 2.13162V8.98709C7.15108 9.16288 7.01045 9.26834 6.86983 9.26834H6.62373C6.44795 9.26834 6.34248 9.16288 6.34248 8.98709V3.43241C6.34248 2.09647 4.37373 2.06131 4.37373 3.39725V10.9207C4.37373 11.2019 4.02217 11.3074 3.88155 11.0613L2.89717 9.69022C2.58077 9.23319 1.94795 9.16288 1.52608 9.47928C1.1042 9.79569 0.998735 10.4285 1.31514 10.8504L5.6042 16.8621H9.01092C9.3438 17.297 9.74445 17.6772 10.1971 17.9871H5.46358C5.21748 17.9871 4.93623 17.8816 4.79561 17.6355L0.401079 11.5183C-0.26689 10.5691 -0.0911086 9.26834 0.85811 8.56522C1.59639 8.03788 2.54561 8.03788 3.24874 8.53006V3.39725C3.24874 1.88553 4.79561 0.866 6.13155 1.4285C6.76436 -0.434781 9.40108 -0.505094 10.1042 1.39334C11.4753 0.830844 12.987 1.88553 12.987 3.39725Z"/>
+        <path clip-rule="evenodd"
+              d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+              fill-rule="evenodd"/>
+      </svg>
+
+       <!-- Switch ISWA -->
+      <div class="switchMode-container">
+        <div (click)="toggleMode()"
+          id='button-container'class="switchMode-button" >
+          <div id='my-button' class="switchMode-button-element">
+            <p id='iswa'>ISWA</p>
+          </div>
+        <p id='zeichnung'>Zeichnung</p>
+        </div>
+      </div>
+
+      <div *ngIf="searchContext.gebaerdenInput.length > 0"
+        class="searchContent">
+        <div *ngFor="let searchSymbol of getSearchInputAsUnicodeArray">
+        <span class="searchword-dgs defaultFontStyle mediumTextStyle">{{searchSymbol}}</span>
+        </div>
+        <div *ngIf="searchContext.fachgebietsFilter">
+        <fa-icon *ngFor="let fachgebiet of searchContext.fachgebietsFilter"
+                  [icon]="fachgebiet.icon"
+                  class="searchword-dgs defaultFontStyle mediumTextStyle"></fa-icon>
+        </div>
+
+        <div *ngIf="searchContext.ursprungFilter">
+        <fa-icon *ngFor="let ursprung of searchContext.ursprungFilter"
+                  [icon]="ursprung.icon"
+                  class="searchword-dgs defaultFontStyle mediumTextStyle"></fa-icon>
+        </div>
+        <div *ngIf="searchContext.verwendungskontextFilter">
+        <fa-icon *ngFor="let verwendungskontext of searchContext.verwendungskontextFilter"
+                  [icon]="verwendungskontext.icon"
+                  class="searchword-dgs defaultFontStyle mediumTextStyle"></fa-icon>
+        </div>
+
+        <div (click)="clearSearch()"
+            class="clear">
+        <fa-icon [icon]="faTimes"></fa-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- rechte Seite Search Results-->
+    <div class="rightMenu">
+
+      <div class="searchResultHeader">
+        <span *ngIf="this.searchContext.gebaerdenInput.length > 0"
+          class="resultCountEmpty resultCount">{{searchResultText}}</span>
+        <div *ngIf="this.searchContext.gebaerdenInput.length == 0" class="infoTextContainer">
+          <svg height="5rem"
+               viewBox="-9 -9 36 36"
+               opacity="0.5"
+               xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="18" fill="#2F9C91"/>
+            <path fill="white"
+                  d="M12.987 3.39725V4.20584C14.323 3.74881 15.7644 4.73319 15.7644 6.20975V9.32559C15.4041 9.10766 15.0151 8.93262 14.6042 8.80757V6.20975C14.6042 4.87381 12.6706 4.90897 12.6706 6.20975V8.60304C12.3943 8.62599 12.1242 8.67074 11.862 8.73559V3.39725C11.862 2.06131 9.89327 2.02616 9.89327 3.36209V8.98709C9.89327 9.16288 9.7878 9.26834 9.61202 9.26834H9.36592C9.2253 9.26834 9.08467 9.16288 9.08467 8.98709V2.13162C9.08467 0.830844 7.15108 0.795687 7.15108 2.13162V8.98709C7.15108 9.16288 7.01045 9.26834 6.86983 9.26834H6.62373C6.44795 9.26834 6.34248 9.16288 6.34248 8.98709V3.43241C6.34248 2.09647 4.37373 2.06131 4.37373 3.39725V10.9207C4.37373 11.2019 4.02217 11.3074 3.88155 11.0613L2.89717 9.69022C2.58077 9.23319 1.94795 9.16288 1.52608 9.47928C1.1042 9.79569 0.998735 10.4285 1.31514 10.8504L5.6042 16.8621H9.01092C9.3438 17.297 9.74445 17.6772 10.1971 17.9871H5.46358C5.21748 17.9871 4.93623 17.8816 4.79561 17.6355L0.401079 11.5183C-0.26689 10.5691 -0.0911086 9.26834 0.85811 8.56522C1.59639 8.03788 2.54561 8.03788 3.24874 8.53006V3.39725C3.24874 1.88553 4.79561 0.866 6.13155 1.4285C6.76436 -0.434781 9.40108 -0.505094 10.1042 1.39334C11.4753 0.830844 12.987 1.88553 12.987 3.39725Z"/>
+            <path clip-rule="evenodd" fill="white"
+                  d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+                  fill-rule="evenodd"/>
+          </svg>
+          <span class="text-xl font-medium">DGS<fa-icon [icon]="faArrowRight"></fa-icon>Deutsch</span>
+          <a routerLink="/page/gebaerdensuchinformation"><u>Wie funktioniert die Gebärdensuche?</u></a>
+          <span class="font-light">Beschreibe die gesuchte Gebärde möglichst genau. Wende Filter an, um die Ergebnisse einzuschränken.</span>
+        </div>
+
+      </div>
+
+      <div class="card-container">
+        <div class="searchResult">
+          <ng-template ngFor let-entry [ngForOf]="searchContext.searchResultEntries" let-i="index">
+            <a
+              *ngIf="i <= visibleEndIndex"
+              href
+              onclick="return false;"
+              routerLink="/entry/{{entry.fachbegriff}}/{{entry.id}}">
+              <div class="outer-card font-normal text-base">
+                <app-search-result-entry [lexikonEintrag]="entry"></app-search-result-entry>
+              </div>
+            </a>
+          </ng-template>
+          <div class="showMoreButton" *ngIf="visibleEndIndex < searchContext.searchResultEntries.length - 1"
+               (click)="showMore()">
+            Mehr anzeigen
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auswahlmenü -->
+    <div class="leftMenu">
+
+      <!-- Handform -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <a (click)="onMenuItemHeaderClicked(handFormMenuName)"
+           class="leftMenuItemHeader"
+           href
+           onclick="return false;">
+          <span class="filter-header">{{handFormMenuName}}</span>
+          <div class="color-grey-90">
+            <fa-icon
+              *ngIf="searchContext.includesHandformen()"
+              [icon]="faCheckCircle"
+              class="menuItemCheckIcon">
+            </fa-icon>
+            <fa-icon [icon]="isHandformMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+          </div>
+        </a>
+        <div *ngIf="isHandformMenuSelected">
+          <div class="gebärdenContainer">
+            <a (click)="onGebaerdeClicked(handform)"
+               *ngFor="let handform of handformen"
+               [class.iswa-style]="useISWAFont"
+               [class.drawing-style]="!useISWAFont"
+               [class.gebaerdenButton-selected]="isGebaerdeSelected(handform)"
+               [class.gebaerdenButton]="!isGebaerdeSelected(handform)"
+               href
+               onclick="return false;"
+               title="{{handform.description}}">
+              {{handform.symbol}}
+              <fa-icon *ngIf="isGebaerdeSelected(handform)"
+                [icon]="faCheck"
+                class="gebaerde-checkedIcon"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Hand -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <a (click)="onMenuItemHeaderClicked(zweihandGebaerdenMenuName)"
+           class="leftMenuItemHeader"
+           href
+           onclick="return false;">
+          <span class="filter-header">{{zweihandGebaerdenMenuName}}</span>
+          <div class="color-grey-90">
+            <fa-icon
+              *ngIf="searchContext.includes2HandGebaerde()"
+              [icon]="faCheckCircle"
+              class="menuItemCheckIcon">
+            </fa-icon>
+            <fa-icon [icon]="isZweihandGebaerdenMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+          </div>
+        </a>
+        <div *ngIf="isZweihandGebaerdenMenuSelected">
+          <div class="gebärdenContainer">
+            <a (click)="onGebaerdeClicked(zweihandGebaerde)"
+               *ngFor="let zweihandGebaerde of zweihandGebaerden"
+               [class.iswa-style]="useISWAFont"
+               [class.drawing-style]="!useISWAFont"
+               [class.gebaerdenButton-selected]="isGebaerdeSelected(zweihandGebaerde)"
+               [class.gebaerdenButton]="!isGebaerdeSelected(zweihandGebaerde)"
+
+               href
+               onclick="return false;"
+               title="{{zweihandGebaerde.description}}">
+              {{zweihandGebaerde.symbol}}
+              <fa-icon *ngIf="isGebaerdeSelected(zweihandGebaerde)"
+                [icon]="faCheck"
+                class="gebaerde-checkedIcon"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kontakt with Ort-->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <a (click)="onMenuItemHeaderClicked(kontaktMenuName)"
+           class="leftMenuItemHeader"
+           href
+           onclick="return false;">
+          <span class="filter-header">{{kontaktMenuName}}</span>
+          <div class="color-grey-90">
+            <fa-icon
+              *ngIf="searchContext.includesKontakte()"
+              [icon]="faCheckCircle"
+              class="menuItemCheckIcon">
+            </fa-icon>
+            <fa-icon [icon]="isKontaktMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+          </div>
+        </a>
+        <div *ngIf="isKontaktMenuSelected">
+          <div class="gebärdenContainer">
+            <a (click)="onGebaerdeClicked(kontaktForm)"
+               *ngFor="let kontaktForm of kontakte"
+               [class.iswa-style]="useISWAFont"
+               [class.drawing-style]="!useISWAFont"
+               [class.gebaerdenButton-selected]="isGebaerdeSelected(kontaktForm)"
+               [class.gebaerdenButton]="!isGebaerdeSelected(kontaktForm)"
+
+               href
+               onclick="return false;"
+               title="{{kontaktForm.description}}">
+              {{kontaktForm.symbol}}
+              <fa-icon *ngIf="isGebaerdeSelected(kontaktForm)"
+                [icon]="faCheck"
+                class="gebaerde-checkedIcon"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bewegung -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <a (click)="onMenuItemHeaderClicked(bewegungMenuName)"
+           class="leftMenuItemHeader"
+           href
+           onclick="return false;">
+          <span class="filter-header">{{bewegungMenuName}}</span>
+          <div class="color-grey-90">
+            <fa-icon
+              *ngIf="searchContext.includesBewegungen()"
+              [icon]="faCheckCircle"
+              class="menuItemCheckIcon">
+            </fa-icon>
+            <fa-icon [icon]="isBewegungMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+          </div>
+        </a>
+        <div *ngIf="isBewegungMenuSelected">
+          <div class="gebärdenContainer">
+            <a (click)="onGebaerdeClicked(bewegung)"
+               *ngFor="let bewegung of bewegungen"
+               [class.iswa-style]="useISWAFont"
+               [class.drawing-style]="!useISWAFont"
+               [class.gebaerdenButton-selected]="isGebaerdeSelected(bewegung)"
+               [class.gebaerdenButton]="!isGebaerdeSelected(bewegung)"
+
+               href
+               onclick="return false;"
+               title="{{bewegung.description}}">
+              {{bewegung.symbol}}
+              <fa-icon *ngIf="isGebaerdeSelected(bewegung)"
+                [icon]="faCheck"
+                class="gebaerde-checkedIcon"></fa-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fachgebiet -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <a (click)="onMenuItemHeaderClicked(fachgebietMenuName)"
+           class="leftMenuItemHeader"
+           href
+           onclick="return false;">
+          <span class="filter-header">{{fachgebietMenuName}}</span>
+          <div class="color-grey-90">
+            <fa-icon
+              *ngIf="searchContext.fachgebietsFilter.length > 0"
+              [icon]="faCheckCircle"
+              class="menuItemCheckIcon">
+            </fa-icon>
+            <fa-icon [icon]="isFachgebietMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+          </div>
+        </a>
+        <div *ngIf="isFachgebietMenuSelected" class="filter-header__list">
+          <a (click)="onFachgebietClicked(fachgebiet)"
+             *ngFor="let fachgebiet of fachgebiete"
+             href
+             onclick="return false;">
+            <div class="filterContainer" [class.filterContainerActive]="searchContext.includesFachgebiet(fachgebiet)">
+              <div class="filterIcon">
+                <fa-icon [icon]="fachgebiet.icon"
+                         class="{{fachgebiet.title}}"></fa-icon>
+              </div>
+              {{fachgebiet.title}}
+              <div *ngIf="searchContext.includesFachgebiet(fachgebiet) then checkedIcon else uncheckedIcon"></div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Ursprung -->
+        <hr class="menuItemSplitter">
+        <div class="leftMenuItem">
+          <a (click)="onMenuItemHeaderClicked(ursprungMenuName)"
+             class="leftMenuItemHeader"
+             href
+             onclick="return false;">
+            <span class="filter-header">{{ursprungMenuName}}</span>
+            <div class="color-grey-90">
+              <fa-icon
+                *ngIf="searchContext.ursprungFilter.length > 0"
+                [icon]="faCheckCircle"
+                class="menuItemCheckIcon">
+              </fa-icon>
+              <fa-icon [icon]="isUrsprungMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+            </div>
+          </a>
+          <div *ngIf="isUrsprungMenuSelected" class="filter-header__list">
+            <a (click)="onUrsprungClicked(ursprung)"
+               *ngFor="let ursprung of urspruenge"
+               href
+               onclick="return false;">
+              <div class="filterContainer" [class.filterContainerActive]="searchContext.includesUrsprung(ursprung)">
+                <div class="filterIcon">
+                  <fa-icon [icon]="ursprung.icon"></fa-icon>
+                </div>
+                {{ursprung.title}}
+                <div *ngIf="searchContext.includesUrsprung(ursprung) then checkedIcon else uncheckedIcon"></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Verwendungskontext -->
+        <hr class="menuItemSplitter">
+        <div class="leftMenuItem">
+          <a (click)="onMenuItemHeaderClicked(verwendungskontextMenuName)"
+             class="leftMenuItemHeader"
+             href
+             onclick="return false;">
+            <span class="filter-header">{{verwendungskontextMenuName}}</span>
+            <div class="color-grey-90">
+              <fa-icon
+                *ngIf="searchContext.verwendungskontextFilter.length > 0"
+                [icon]="faCheckCircle"
+                class="menuItemCheckIcon">
+              </fa-icon>
+              <fa-icon [icon]="isVerwendungskontextMenuSelected ? faChevronUp : faChevronDown"></fa-icon>
+            </div>
+          </a>
+          <div *ngIf="isVerwendungskontextMenuSelected" class="filter-header__list">
+            <a (click)="onVerwendungskontextClicked(verwendungskontext)"
+               *ngFor="let verwendungskontext of verwendungskontexte"
+               href
+               onclick="return false;">
+              <div class="filterContainer" [class.filterContainerActive]="searchContext.includesVerwendungskontext(verwendungskontext)">
+                <div class="filterIcon-verwendungskontext">
+                  <fa-icon [icon]="verwendungskontext.icon"></fa-icon>
+                </div>
+                {{verwendungskontext.title}}
+                <div *ngIf="searchContext.includesVerwendungskontext(verwendungskontext) then checkedIcon else uncheckedIcon"></div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <hr class="menuItemSplitter">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #checkedIcon>
+  <fa-icon [icon]="faCheck" class="filter-checkedIcon"></fa-icon>
+</ng-template>
+<ng-template #uncheckedIcon>
+  <fa-icon [icon]="faSquare" class="filter-checkedIcon"></fa-icon>
+</ng-template>

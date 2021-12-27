@@ -1,0 +1,308 @@
+<div class="navigation-bg"
+     [class.currentFachgebietMobile]="isMobile">
+  <div class="content-container fg-1">
+    <div class="navigation">
+      <div
+        [class.navigation-control]="!isMobile"
+        [class.centerMobile]="isMobile">
+        <div *ngIf="searchword?.length > 0; else elseBlock">
+          <a onclick="return false;"
+             class="navigation__back-button"
+             (click)="navigateToFirstEntryOnFachgebietChanged()"
+             (keydown.enter)="navigateToFirstEntryOnFachgebietChanged()" tabindex="0">
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+            <span *ngIf="isMobile" class="navigation__back-destination">Suche</span>
+            <span *ngIf="!isMobile" class="navigation__back-destination">Suchergebnisse</span>
+          </a>
+        </div>
+        <ng-template #elseBlock>
+          <div *ngIf="fachgebiete?.length > 0 && !isLastPageSearch(fachgebiete[0].title)">
+            <a (click)="navigateToUrl('/entries',{fachgebiet : fachgebiete[0].title})"
+               class="navigation__back-button"
+               (keydown.enter)="navigateToUrl('/entries',{fachgebiet : fachgebiete[0].title})">
+              <fa-icon [icon]="faChevronLeft">
+              </fa-icon>
+              <fa-icon class="navigation__fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiete[0].title)>
+              </fa-icon>
+              <span *ngIf="!isMobile" [textContent]="fachgebiete[0].title" class="navigation__back-destination">
+            </span>
+            </a>
+          </div>
+          <div *ngIf="fachgebiete?.length > 0 && isLastPageSearch(fachgebiete[0].title)">
+            <a onclick="return false;"
+               class="navigation__back-button"
+               (click)="navigateToFirstEntryOnFachgebietChanged()"
+               (keydown.enter)="navigateToFirstEntryOnFachgebietChanged()" tabindex="0">
+              <fa-icon [icon]="faChevronLeft">
+              </fa-icon>
+              <fa-icon class="navigation__fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiete[0].title)>
+              </fa-icon>
+              <span *ngIf="!isMobile" [textContent]="fachgebiete[0].title" class="navigation__back-destination">
+              </span>
+            </a>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="navigation-control"
+           [class.currentFachgebietMobile]="isMobile">
+        <div [class.centerMobile]="isMobile">
+          <button
+            onclick="return false;"
+            *ngIf="fachgebiete"
+            [class.hidden]="!isPreviousButtonVisible"
+            [class.button]="!isMobile"
+            [class.buttonMobile]="isMobile"
+            tabindex="0" title="Vorherige Fachgebärde"
+            (click)="navigateToPreviousEntry()"
+            (keydown.enter)="navigateToPreviousEntry()">
+            <fa-icon [icon]="faArrowLeft">
+            </fa-icon>
+            <span *ngIf="!isMobile">letzte</span>
+          </button>
+        </div>
+        <div *ngIf="!isMobile"></div>
+        <span class="gebaerden_count">
+          <span>{{actualIndex}}/{{searchEntryCount}}</span>
+          <span *ngIf="!isMobile">Gebärden</span>
+      </span>
+        <div *ngIf="isNextButtonVisible"
+             [class.centerMobile]="isMobile">
+          <button
+            onclick="return false;"
+            *ngIf="fachgebiete"
+            [class.hidden]="!isNextButtonVisible"
+            [class.button]="!isMobile"
+            [class.buttonMobile]="isMobile"
+            tabindex="0" title="Nächste Fachgebärde"
+            (click)="navigateToNextEntry()"
+            (keydown.enter)="navigateToNextEntry()">
+            <span *ngIf="!isMobile">nächste</span>
+            <fa-icon [icon]="faArrowRight">
+            </fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bottom-content-container" [class.content-containerMobile]="isMobile">
+
+  <div class="fachbegriff-paging">
+    <h1 lang="de-DE" class="entry-show-term">
+      <app-entry-title-display [parentName]="componentName" [title]="currentLexiconEntry.fachbegriff">
+      </app-entry-title-display>
+    </h1>
+  </div>
+
+  <!-- Mobile -->
+  <div *ngIf="isMobile" class="mobileShow">
+    <swiper #swiper [slidesPerView]="1" [spaceBetween]="0" [navigation]="{clickable: true}"
+            [pagination]="{ clickable: true }" observeSlideChildren="true" (observerUpdate)="onObserverUpdate($event)"
+            (sliderMove)="onSliderMove($event)" (slideChangeTransitionEnd)="onSlideTransitionEnd($event)">
+      <ng-template swiperSlide *ngFor="let lexiconEntry of lexiconEntryList">
+        <div class="entry-show-video">
+          <vg-player class="mobileVideo">
+            <vg-controls>
+              <vg-playback-button [playbackValues]="[ '1.0', '0.5', '0.25' ]"></vg-playback-button>
+              <vg-fullscreen></vg-fullscreen>
+            </vg-controls>
+            <vg-overlay-play></vg-overlay-play>
+            <img class="mobileThumbnail" width="100%" height="100%" *ngIf="!videoplaying"
+                 src="{{thumbnailService.getThumbnailLink(lexiconEntry.id)}}" alt="Vorschau">
+            <video width="100%" height="100%" src={{lexiconEntry.videoLink}} type="video/mp4" [vgMedia]="mediaVariant"
+                   #mediaVariant id="singleVariantVideo" preload="none" playsinline (play)="onVideoPlay()"
+                   (ended)="onVideoEnded(mediaVariant)">
+            </video>
+            <span *ngIf="lexiconEntry.empfehlung">
+              <img class="seal" src="assets/images/empfehlungssiegel_noch_heller.png" alt="Empfehlungssiegel">
+            </span>
+          </vg-player>
+          <div class="entry-show-action">
+            <div style="display: flex">
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkMobile('twitter')">
+                <fa-icon [icon]="faTwitter"></fa-icon>
+              </a>
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkMobile('facebook')">
+                <fa-icon [icon]="faFacebook"></fa-icon>
+              </a>
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkMobile('whatsapp')">
+                <fa-icon [icon]="faWhatsapp"></fa-icon>
+              </a>
+            </div>
+            <div>
+              <a class="actionIcon" href={{lexiconEntry.videoLink}}>
+                <fa-icon [icon]="faDownload"></fa-icon>
+              </a>
+            </div>
+          </div>
+          <div class="metadataAndGSContainer">
+            <div class="entry-show-details">
+              <div class="overline">Fachgebiet</div>
+              <ul>
+                <li *ngFor="let fachgebiet of lexiconEntry.fachgebiete"
+                    (click)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
+                    class="metadataContentFont color-primary-80 fachgebiet-filter">
+                  <fa-icon class="fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiet)></fa-icon>
+                  <a href onclick="return false;">{{fachgebiet}}</a>
+                </li>
+              </ul>
+              <div class="overline">Ursprung</div>
+              <ul>
+                <li class="metadataContentFont" *ngFor="let ursprung of lexiconEntry.ursprung; let isLast = last">
+                  {{ursprung}}{{isLast ? "" : ","}}
+                </li>
+              </ul>
+              <div class="overline">Verwendungskontext</div>
+              <ul>
+                <li class="metadataContentFont"
+                    *ngFor="let verwendungskontext of lexiconEntry.verwendungskontext; let isLast=last">
+                  {{verwendungskontext}}{{isLast ? "" : ","}}
+                </li>
+              </ul>
+            </div>
+            <div class="gebaerdenschriftContainer">
+              <img class="gebaerdenschrift" src={{lexiconEntry.gebaerdenschrift.url}} alt="Gebärdenschrift">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+  <div class="desktop-wrapper">
+
+    <!-- Desktop -->
+    <div *ngIf="!isMobile" class="desktopShow">
+      <div class="videoPickerAndPlayer">
+        <div class="entry-show-video">
+          <vg-player class="mainVideo">
+            <vg-controls>
+              <vg-play-pause></vg-play-pause>
+              <vg-time-display [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
+              <vg-scrub-bar style="pointer-events: none;">
+                <vg-scrub-bar-current-time [vgSlider]="true"></vg-scrub-bar-current-time>
+                <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+              </vg-scrub-bar>
+              <vg-time-display [vgProperty]="'total'" [vgFormat]="'mm:ss'"></vg-time-display>
+              <vg-playback-button [playbackValues]="[ '1.0', '0.5', '0.25' ]"></vg-playback-button>
+              <vg-fullscreen></vg-fullscreen>
+            </vg-controls>
+            <span *ngIf="currentLexiconEntry.empfehlung">
+              <img class="seal" src="assets/images/empfehlungssiegel_noch_heller.png" alt="empfehlungssiegel">
+            </span>
+            <img class="videoThumbnail" width="100%" height="100%" *ngIf="!videoplaying" src="{{getThumbnailLink}}"
+                 alt="Vorschau">
+            <video width="100%" height="100%" src={{currentLexiconEntry.videoLink}} type="video/mp4"
+                   [vgMedia]="desktopVideo" #desktopVideo id="singleMainVideo" preload="none"
+                   onloadedmetadata="this.muted=true" [poster]="getThumbnailLink" playsinline (play)="onVideoPlay()"
+                   (ended)="onVideoEnded(desktopVideo)">
+              <a href={{currentLexiconEntry.videoLink}}>Download</a>
+            </video>
+          </vg-player>
+          <div class="entry-show-action">
+            <div style="display: flex">
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkDesktop('twitter')">
+                <fa-icon [icon]="faTwitter"></fa-icon>
+              </a>
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkDesktop('facebook')">
+                <fa-icon [icon]="faFacebook"></fa-icon>
+              </a>
+              <a target="_blank" class="actionIcon" [href]="getSocialLinkDesktop('whatsapp')">
+                <fa-icon [icon]="faWhatsapp"></fa-icon>
+              </a>
+            </div>
+            <div>
+              <a class="actionIcon" href={{currentLexiconEntry.videoLink}}>
+                <fa-icon [icon]="faDownload"></fa-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="variantWrapper">
+          <div class="videoVariantPicker">
+            <div [ngClass]="{'chosenVariant': currentLexiconEntry.id == lexiconEntry.id}"
+                 class="variantThumbnailContainer" tabindex="0" *ngFor="let lexiconEntry of lexiconEntryList"
+                 (click)="navigateToVariant(lexiconEntry.fachbegriff,lexiconEntry.id)"
+                 (keydown.enter)="navigateToVariant(lexiconEntry.fachbegriff,lexiconEntry.id)">
+              <img [ngClass]="{'variantThumbnailNo': currentLexiconEntry.id == lexiconEntry.id}"
+                   src="{{thumbnailService.getThumbnailLink(lexiconEntry.id)}}" class="variantThumbnail" alt="Vorschau">
+              <img [ngClass]="{'variantSignFull': currentLexiconEntry.id == lexiconEntry.id}"
+                   src="{{lexiconEntry.gebaerdenschrift.url}}" class="variantSign" alt="Gebärdenschrift">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="entry-show-details">
+        <div class="metadataContainer">
+          <div class="overline">Fachgebiet</div>
+          <ul>
+            <li *ngFor="let fachgebiet of currentLexiconEntry.fachgebiete"
+                (click)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
+                (keydown.enter)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
+                class="metadataContentFont color-primary-80 fachgebiet-filter" tabindex="0">
+              <fa-icon class="fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiet)></fa-icon>
+              <a href onclick="return false;">{{fachgebiet}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="metadataContainer">
+          <div class="overline">Ursprung</div>
+          <ul>
+            <li class="metadataContentFont" *ngFor="let ursprung of currentLexiconEntry.ursprung; let isLast = last">
+              {{ursprung}}{{isLast ? "" : ","}}
+            </li>
+          </ul>
+        </div>
+        <div class="metadataContainer">
+          <div class="overline">Verwendungskontext</div>
+          <ul>
+            <li class="metadataContentFont"
+                *ngFor="let verwendungskontext of currentLexiconEntry.verwendungskontext; let isLast=last">
+              {{verwendungskontext}}{{isLast ? "" : ","}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentLexiconEntry.wortlink || currentLexiconEntry.wikipedialink || currentLexiconEntry.otherlink"
+         class="entry-show-definition">
+      <h3>Definition</h3>
+      <p class="definition" [appMath]>
+        <app-entry-definition [definition]="currentLexiconEntry.definition"></app-entry-definition>
+      </p>
+      <div class="definition-wrapper">
+        <div *ngIf="currentLexiconEntry.wortlink">
+          <div class="definition-hint">
+            <div class="small-overline">Quelle</div>
+            <a class="definition-link" href="{{currentLexiconEntry.wortlink}}" target="_blank"
+               rel="noreferrer noopener">Wiktionary</a>
+          </div>
+        </div>
+        <div *ngIf="currentLexiconEntry.wikipedialink || currentLexiconEntry.otherlink">
+          <div class="definition-hint">
+            <div *ngIf="currentLexiconEntry.definition">
+              <div class="small-overline">mehr</div>
+              <a *ngIf="currentLexiconEntry.wikipedialink !== ''" class="definition-link"
+                 href="{{currentLexiconEntry.wikipedialink}}" target="_blank" rel="noreferrer noopener">Wikipedia</a>
+              <a *ngIf="currentLexiconEntry.otherlink !== ''" class="definition-link"
+                 href="{{currentLexiconEntry.otherlink}}" target="_blank" rel="noreferrer noopener">Sonstiges</a>
+            </div>
+            <div *ngIf="!currentLexiconEntry.definition">
+              <a *ngIf="currentLexiconEntry.wikipedialink !== ''" class="definition-link"
+                 href="{{currentLexiconEntry.wikipedialink}}" target="_blank" rel="noreferrer noopener">Wikipedia</a>
+              <a *ngIf="currentLexiconEntry.otherlink !== ''" class="definition-link"
+                 href="{{currentLexiconEntry.otherlink}}" target="_blank" rel="noreferrer noopener">Sonstiges</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry-show-cc">
+      <img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-nc-sa/3.0/de/88x31.png">
+      <span>Quelle: Max-Planck-Gesellschaft zur Förderung der Wissenschaften e.V. (MPG)
+        </span>
+    </div>
+  </div>
+</div>

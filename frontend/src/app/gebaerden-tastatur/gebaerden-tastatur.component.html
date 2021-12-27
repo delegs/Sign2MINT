@@ -1,0 +1,68 @@
+<div *ngIf="isFocus" class="main-container">
+
+  <div class="keyboard-container">
+    <div class="freePlace"></div>
+    <div *ngIf="isISWA" class="keys">
+      <div *ngFor="let symbol of gebaerdensymbole" class="ssw-one-d ssw-button"
+           (click)="onGebaerdenTastaturClick(symbol)"
+           [class.buttonTastaturSelected]="isSignSelected(symbol)"
+           [class.buttonTastaturStandard]="!isSignSelected(symbol)">
+        {{symbol}}
+        <fa-icon *ngIf="isSignSelected(symbol)" [icon]="faCheck" class=gebaerde-checkedIcon></fa-icon>
+      </div>
+    </div>
+
+    <div *ngIf="!isISWA" class="keys">
+      <div *ngFor="let symbol of gebaerdensymbole" class="ssw-one-d-WIP ssw-button"
+           (click)="onGebaerdenTastaturClick(symbol)"
+           [class.buttonTastaturSelected]="isSignSelected(symbol)"
+           [class.buttonTastaturStandard]="!isSignSelected(symbol)">
+        {{symbol}}
+        <fa-icon *ngIf="isSignSelected(symbol)" [icon]="faCheck" class="gebaerde-checkedIcon"></fa-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-container">
+
+    <div class="grid-container">
+      <div class="progressIcon-Handform">
+        <fa-icon
+          [className]="selectedSearchCategory === handformCategory ? 'fa-icon-circle-selected' : 'fa-icon-circle'"
+          [icon]="handIcon" (click)="loadCategorySymbols(handformCategory)"></fa-icon>
+      </div>
+
+      <hr class="connectorLine1">
+
+      <div class="progressIcon-2-Hand">
+        <fa-icon
+          [className]="selectedSearchCategory === zweihandGebaerdenCategory ? 'fa-icon-circle-selected' : 'fa-icon-circle'"
+          [icon]="zweihandGebaerdenIcon" (click)="loadCategorySymbols(zweihandGebaerdenCategory)"></fa-icon>
+      </div>
+
+      <hr class="connectorLine2">
+
+      <div class="progressIcon-Kontakt">
+        <fa-icon [className]="selectedSearchCategory === kontaktCategory ? 'fa-icon-circle-selected' : 'fa-icon-circle'"
+                 [icon]="handsIcon" (click)="loadCategorySymbols(kontaktCategory)"></fa-icon>
+      </div>
+
+      <hr class="connectorLine3">
+
+      <div class="progressIcon-Bewegung">
+        <fa-icon [className]="selectedSearchCategory === bewegungCategory ? 'fa-icon-circle-selected' : 'fa-icon-circle'"
+                 [icon]="bewegungIcon" (click)="loadCategorySymbols(bewegungCategory)"></fa-icon>
+      </div>
+
+    </div>
+    <div class="specialKeyContainer">
+      <div
+        class="toggleKey"
+        (click)="toggleFont()">
+        <img src="assets/images/ISWA_GS_Switch.svg" alt="Switch Layout">
+      </div>
+        <fa-icon class="fa-icon-normal" [icon]="arrowIcon" (click)="toggleKeyboard()"></fa-icon>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,55 @@
+<div class="bottom-content-container">
+  <div class="tile">
+    <div class="tile-header">
+      <span class="text-lg">Lexikoneinträge importieren</span>
+    </div>
+
+    <div *ngIf="importStep === 0" class="content-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+      <span>Bitte die Excel Datei mit den Lexikoneinträgen hier ablegen. Optional auch neue Videos im .zip Format (max. 2GB).</span>
+
+      <div>
+        <div *ngFor="let fileToImport of filesToImport " class="file-container">
+          <fa-icon [icon]="getIconForFile(fileToImport)"></fa-icon>
+          <span>{{fileToImport.name}}</span>
+          <button class="remove-button" (click)="removeFile(fileToImport)">
+            <fa-icon [icon]="faTimes"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <fa-icon *ngIf="filesToImport.length == 0" [icon]="faCloudUpload"></fa-icon>
+      <div class="button-menu">
+        <button [disabled]="importDisabled" class="button" (click)="runImport()">
+          Import
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="importStep === 1" class="content-area">
+      <span>Import läuft. Dieser Vorgang kann eine Weile dauern.</span>
+      <div class="loader"></div>
+    </div>
+
+    <div *ngIf="importStep === 2" class="content-area">
+      <span>{{importResult}}</span>
+      <fa-icon *ngIf="!showImportLog" [icon]="faDizzy"></fa-icon>
+      <span *ngIf="!showImportLog">Bitte kontaktiere das Sign2MINT Team</span>
+      <div *ngIf="showImportLog" class="log-area" [innerHTML]="importLog | safeHtml"></div>
+      <div class="button-menu">
+        <div *ngIf="showImportLog" class="button" (click)="openLog()">
+          Log anzeigen
+        </div>
+        <div class="button" (click)="reset()">
+          Neuer Import
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,53 @@
+<app-header></app-header>
+<form [formGroup]="suggestionForm" (ngSubmit)="onSubmit()">
+  <h2 class="s2m--subheadline">Bitte um Gebärde für</h2>
+  <div>
+    <label>Fachbegriff</label>
+    <textarea formControlName="fachbegriff"
+              name="fachbegriff"
+              class="sc-input"
+              rows="1"
+              id="fachbegriff_content"
+              placeholder="Fachbegriff"
+              required
+              minlength="1"
+              (keydown)="onInputChanged()">
+    </textarea>
+
+    <label>Fachgebiet</label>
+    <textarea
+              formControlName="fachbereich"
+              name="fachbereich"
+              class="sc-input"
+              rows="1"
+              id="fachbereich_content"
+              placeholder="Fachgebiet"
+              required
+              minlength="1"
+              (keydown)="onInputChanged()">
+    </textarea>
+    <div class="submitBar">
+
+      <ngx-recaptcha2 #captchaElem
+                      [siteKey]="siteKey"
+                      [useGlobalDomain]="false"
+                      [size]="size"
+                      [hl]="lang"
+                      [theme]="theme"
+                      [type]="type"
+                      formControlName="recaptcha">
+      </ngx-recaptcha2>
+
+      <button [class.buttonGreyed]="!suggestionForm.valid" [disabled]="!suggestionForm.valid" type="submit" tabindex="0"
+              (keydown.enter)="onSubmit()">Absenden
+      </button>
+    </div>
+  </div>
+  <div *ngIf="sendingSuccessful" class="formFeedback sendEmailSuccessful">
+    Senden erfolgreich. <br>
+    Vielen Dank für die Anfrage
+  </div>
+  <div *ngIf="sendingFailed" class="formFeedback sendEmailFailed">
+    Beim Senden ist ein Fehler aufgetreten
+  </div>
+</form>

@@ -1,0 +1,66 @@
+<header class="header">
+  <form>
+    <button class="back" (mousedown)="backToPreviousSite()">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
+    </button>
+    <input
+      #searchInput
+      id="searchInput"
+      type="text"
+      name="searchInput"
+      autocomplete="off"
+      placeholder="Wortsuche"
+      (input)="onInput()"
+      (keydown.enter)="searchInput_OnEnter($event)"
+      [(ngModel)]="searchContext.textInput">
+    <button class="clear" *ngIf="isClearButtonVisible" (click)="clearSearch()"
+            onclick="document.getElementById('searchInput').value = ''">
+      <fa-icon [icon]="faTimes" style="font-size: 1rem"></fa-icon>
+    </button>
+  </form>
+</header>
+
+<div class="bottom-content-container">
+  <div class="searchResultHeader">
+    <div *ngIf="searchContext.textInput.length === 0" class="infoTextContainer">
+      <svg height="5rem"
+           viewBox="-9 -9 36 36"
+           opacity="0.5"
+           xmlns="http://www.w3.org/2000/svg">
+        <circle cx="9" cy="9" r="18" fill="#2F9C91"/>
+        <path fill="white"
+              d="M15.1875 1.11212C15.4688 1.11212 15.75 1.39337 15.75 1.67462V4.20587C15.75 4.38165 15.6094 4.48712 15.4688 4.48712H14.9062C14.7305 4.48712 14.625 4.38165 14.625 4.20587V2.23712H8.4375V11.7808C8.18991 12.3833 8.05338 13.0431 8.05338 13.7348C8.05338 14.4265 8.18991 15.0863 8.4375 15.6888V15.7371H8.45765C8.62853 16.1411 8.84954 16.5187 9.11289 16.8621H4.78125C4.60547 16.8621 4.5 16.7567 4.5 16.5809V16.0184C4.5 15.8777 4.60547 15.7371 4.78125 15.7371H7.3125V2.23712H1.125V4.20587C1.125 4.38165 0.984375 4.48712 0.84375 4.48712H0.28125C0.105469 4.48712 0 4.38165 0 4.20587V1.67462C0 1.39337 0.246094 1.11212 0.5625 1.11212H15.1875Z"></path>
+        <path clip-rule="evenodd" fill="white"
+              d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+              fill-rule="evenodd"/>
+      </svg>
+      <span class="text-xl font-medium">Deutsch<fa-icon [icon]="faArrowRight"></fa-icon>DGS</span>
+      <span class="font-light">Du kannst auch von DGS nach Deutsch suchen. Probiere unsere Gebärdensuche!</span>
+
+    </div>
+    <div *ngIf="searchContext.textInput.length > 0">
+      <div *ngIf="!showSuggestionText" class="resultCount">
+        {{searchResultText}}
+      </div>
+      <div *ngIf="showSuggestionText" class="resultCountEmpty resultCount">
+        <span>Keine Ergebnisse gefunden</span>
+        <a routerLink="/suggestion">Lexikoneintrag vorschlagen</a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-container">
+    <div class="searchResult">
+      <a *ngFor="let entry of searchContext.searchResultEntries" routerLink="/entry/{{entry.fachbegriff}}"
+         onclick="return false;" href>
+        <div
+          [class.outer-card]="!isFirstMatch(entry)"
+          [class.outer-card-selected]="isFirstMatch(entry)"
+          class="outer-card">
+          <app-search-result-entry [lexikonEintrag]="entry" class="text-lg font-normal"></app-search-result-entry>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

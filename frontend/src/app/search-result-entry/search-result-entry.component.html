@@ -1,0 +1,21 @@
+<div>
+  <div class="inner-card">
+    <span class="gebaerdenschrift-container" *ngIf="showGebaerdenschrift">
+      <img class="gebaerdenschrift" [src]="lexikonEintrag.gebaerdenschrift.url" alt="Gebärdenschrift">
+    </span>
+    <div class="inner-card-text">
+      <div class="color-grey-90" lang="de-DE">
+        <app-entry-title-display [title]="lexikonEintrag.fachbegriff"></app-entry-title-display>
+      </div>
+
+      <span class="text-base">
+        <fa-icon *ngFor="let fachgebiet of lexikonEintrag.fachgebiete"
+                [icon]="getIconForFachgebiet(fachgebiet)"
+                class="{{fachgebiet}}">
+        </fa-icon>
+      </span>
+    </div>
+  </div>
+</div>
+
+

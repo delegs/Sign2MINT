@@ -1,0 +1,143 @@
+<!-- Mobile View -->
+<div *ngIf="!isDesktop">
+  <div class="imageLogoWrapper bottom-content-container">
+    <figure>
+      <img alt="Sign2MINT Logo" src="assets/images/sign2mint_logo.png">
+      <figcaption>Projekt zur Entwicklung <br> eines MINT-Fachgebärdenlexikons</figcaption>
+    </figure>
+  </div>
+
+  <div class="search-container">
+    <a onclick="return false;"
+       href
+       (click)="navigateToSearch('gebaerdensuche')"
+       class="gebeardensuche-button search-button">
+      <svg height="24" width="24" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.987 3.39725V4.20584C14.323 3.74881 15.7644 4.73319 15.7644 6.20975V9.32559C15.4041 9.10766 15.0151 8.93262 14.6042 8.80757V6.20975C14.6042 4.87381 12.6706 4.90897 12.6706 6.20975V8.60304C12.3943 8.62599 12.1242 8.67074 11.862 8.73559V3.39725C11.862 2.06131 9.89327 2.02616 9.89327 3.36209V8.98709C9.89327 9.16288 9.7878 9.26834 9.61202 9.26834H9.36592C9.2253 9.26834 9.08467 9.16288 9.08467 8.98709V2.13162C9.08467 0.830844 7.15108 0.795687 7.15108 2.13162V8.98709C7.15108 9.16288 7.01045 9.26834 6.86983 9.26834H6.62373C6.44795 9.26834 6.34248 9.16288 6.34248 8.98709V3.43241C6.34248 2.09647 4.37373 2.06131 4.37373 3.39725V10.9207C4.37373 11.2019 4.02217 11.3074 3.88155 11.0613L2.89717 9.69022C2.58077 9.23319 1.94795 9.16288 1.52608 9.47928C1.1042 9.79569 0.998735 10.4285 1.31514 10.8504L5.6042 16.8621H9.01092C9.3438 17.297 9.74445 17.6772 10.1971 17.9871H5.46358C5.21748 17.9871 4.93623 17.8816 4.79561 17.6355L0.401079 11.5183C-0.26689 10.5691 -0.0911086 9.26834 0.85811 8.56522C1.59639 8.03788 2.54561 8.03788 3.24874 8.53006V3.39725C3.24874 1.88553 4.79561 0.866 6.13155 1.4285C6.76436 -0.434781 9.40108 -0.505094 10.1042 1.39334C11.4753 0.830844 12.987 1.88553 12.987 3.39725Z"/>
+        <path clip-rule="evenodd"
+              d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+              fill-rule="evenodd"/>
+      </svg>
+      <span>Gebärdensuche</span>
+    </a>
+
+    <a onclick="return false;"
+       href
+       (click)="navigateToSearch('text')"
+       class="wordsearch-button search-button">
+      <svg height="24" width="24" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M15.1875 1.11212C15.4688 1.11212 15.75 1.39337 15.75 1.67462V4.20587C15.75 4.38165 15.6094 4.48712 15.4688 4.48712H14.9062C14.7305 4.48712 14.625 4.38165 14.625 4.20587V2.23712H8.4375V11.7808C8.18991 12.3833 8.05338 13.0431 8.05338 13.7348C8.05338 14.4265 8.18991 15.0863 8.4375 15.6888V15.7371H8.45765C8.62853 16.1411 8.84954 16.5187 9.11289 16.8621H4.78125C4.60547 16.8621 4.5 16.7567 4.5 16.5809V16.0184C4.5 15.8777 4.60547 15.7371 4.78125 15.7371H7.3125V2.23712H1.125V4.20587C1.125 4.38165 0.984375 4.48712 0.84375 4.48712H0.28125C0.105469 4.48712 0 4.38165 0 4.20587V1.67462C0 1.39337 0.246094 1.11212 0.5625 1.11212H15.1875Z"/>
+        <path clip-rule="evenodd"
+              d="M15.2973 16.535C14.7124 16.9744 13.9852 17.2348 13.1973 17.2348C11.2643 17.2348 9.69727 15.6678 9.69727 13.7348C9.69727 11.8018 11.2643 10.2348 13.1973 10.2348C15.1303 10.2348 16.6973 11.8018 16.6973 13.7348C16.6973 14.5228 16.4369 15.2499 15.9975 15.8349C16.0161 15.8489 16.0339 15.8643 16.0508 15.8812L17.5508 17.3812C17.7461 17.5765 17.7461 17.8931 17.5508 18.0884C17.3556 18.2836 17.039 18.2836 16.8437 18.0884L15.3437 16.5884C15.3268 16.5714 15.3113 16.5536 15.2973 16.535ZM15.6973 13.7348C15.6973 15.1155 14.578 16.2348 13.1973 16.2348C11.8166 16.2348 10.6973 15.1155 10.6973 13.7348C10.6973 12.3541 11.8166 11.2348 13.1973 11.2348C14.578 11.2348 15.6973 12.3541 15.6973 13.7348Z"
+              fill-rule="evenodd"/>
+      </svg>
+      <span>Wortsuche</span>
+    </a>
+  </div>
+
+  <div class="filter-bar bottom-content-container">
+    <a (click)="handleOpenAllEntriesByFilter()"
+       (keydown.enter)="handleOpenAllEntriesByFilter()" class="filter-button all-entries" href
+       onclick="return false;" tabindex="0">
+      <div>
+        <div class="fachgebietIcon">
+          <fa-icon [icon]="iconForAll" class="alle-gebaerden"></fa-icon>
+        </div>
+        Alle Gebärden
+      </div>
+      <div class="word-count">
+        {{entryCount}}
+      </div>
+    </a>
+    <div class="fachgebiet-wrapper ">
+      <a (click)="handleOpenAllEntriesByFilter(fachgebiet.title)"
+         (keydown.enter)="handleOpenAllEntriesByFilter(fachgebiet.title)"
+         *ngFor="let fachgebiet of fachgebiete" class="{{fachgebiet.title}} filter-button" href
+         onclick="return false;" tabindex="0">
+        <div>
+          <div class="fachgebietIcon">
+            <fa-icon [icon]="fachgebiet.icon" class="{{fachgebiet.title}}"></fa-icon>
+          </div>
+          {{fachgebiet.title}}
+        </div>
+        <div class="word-count">
+          {{fachgebiet.count}}
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Desktop View -->
+<div *ngIf="isDesktop">
+
+  <div class="gridContainer">
+
+    <div class="backgroundLeft"></div>
+    <!--    <app-header class="header"></app-header>-->
+    <div class="backgroundRight"></div>
+    <div class="grid-container bottom-content-container">
+
+      <div class="imageContainer">
+        <div class="imageLogoWrapper">
+          <img alt="Sign2MINT Logo" src="assets/images/sign2mint_logo.png">
+          <span>Projekt zur Entwicklung <br> eines MINT-Fachgebärdenlexikons</span>
+        </div>
+      </div>
+
+      <a class="gebaerdenSearch search-button" href onclick="return false;" (click)="navigateToSearch('gebaerdensuche')">
+        <svg height="40" viewBox="0 0 21 18" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12.987 3.39725V4.20584C14.323 3.74881 15.7644 4.73319 15.7644 6.20975V9.32559C15.4041 9.10766 15.0151 8.93262 14.6042 8.80757V6.20975C14.6042 4.87381 12.6706 4.90897 12.6706 6.20975V8.60304C12.3943 8.62599 12.1242 8.67074 11.862 8.73559V3.39725C11.862 2.06131 9.89327 2.02616 9.89327 3.36209V8.98709C9.89327 9.16288 9.7878 9.26834 9.61202 9.26834H9.36592C9.2253 9.26834 9.08467 9.16288 9.08467 8.98709V2.13162C9.08467 0.830844 7.15108 0.795687 7.15108 2.13162V8.98709C7.15108 9.16288 7.01045 9.26834 6.86983 9.26834H6.62373C6.44795 9.26834 6.34248 9.16288 6.34248 8.98709V3.43241C6.34248 2.09647 4.37373 2.06131 4.37373 3.39725V10.9207C4.37373 11.2019 4.02217 11.3074 3.88155 11.0613L2.89717 9.69022C2.58077 9.23319 1.94795 9.16288 1.52608 9.47928C1.1042 9.79569 0.998735 10.4285 1.31514 10.8504L5.6042 16.8621H9.01092C9.3438 17.297 9.74445 17.6772 10.1971 17.9871H5.46358C5.21748 17.9871 4.93623 17.8816 4.79561 17.6355L0.401079 11.5183C-0.26689 10.5691 -0.0911086 9.26834 0.85811 8.56522C1.59639 8.03788 2.54561 8.03788 3.24874 8.53006V3.39725C3.24874 1.88553 4.79561 0.866 6.13155 1.4285C6.76436 -0.434781 9.40108 -0.505094 10.1042 1.39334C11.4753 0.830844 12.987 1.88553 12.987 3.39725Z"/>
+          <path clip-rule="evenodd"
+                d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
+                fill-rule="evenodd"/>
+        </svg>
+        <span class="mediumTextStyle">Gebärdensuche</span>
+      </a>
+
+      <a class="textSearch search-button" href onclick="return false;" (click)="navigateToSearch('text')">
+        <svg height="40" viewBox="0 0 21 18" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.1875 1.11212C15.4688 1.11212 15.75 1.39337 15.75 1.67462V4.20587C15.75 4.38165 15.6094 4.48712 15.4688 4.48712H14.9062C14.7305 4.48712 14.625 4.38165 14.625 4.20587V2.23712H8.4375V11.7808C8.18991 12.3833 8.05338 13.0431 8.05338 13.7348C8.05338 14.4265 8.18991 15.0863 8.4375 15.6888V15.7371H8.45765C8.62853 16.1411 8.84954 16.5187 9.11289 16.8621H4.78125C4.60547 16.8621 4.5 16.7567 4.5 16.5809V16.0184C4.5 15.8777 4.60547 15.7371 4.78125 15.7371H7.3125V2.23712H1.125V4.20587C1.125 4.38165 0.984375 4.48712 0.84375 4.48712H0.28125C0.105469 4.48712 0 4.38165 0 4.20587V1.67462C0 1.39337 0.246094 1.11212 0.5625 1.11212H15.1875Z"/>
+          <path clip-rule="evenodd"
+                d="M15.2973 16.535C14.7124 16.9744 13.9852 17.2348 13.1973 17.2348C11.2643 17.2348 9.69727 15.6678 9.69727 13.7348C9.69727 11.8018 11.2643 10.2348 13.1973 10.2348C15.1303 10.2348 16.6973 11.8018 16.6973 13.7348C16.6973 14.5228 16.4369 15.2499 15.9975 15.8349C16.0161 15.8489 16.0339 15.8643 16.0508 15.8812L17.5508 17.3812C17.7461 17.5765 17.7461 17.8931 17.5508 18.0884C17.3556 18.2836 17.039 18.2836 16.8437 18.0884L15.3437 16.5884C15.3268 16.5714 15.3113 16.5536 15.2973 16.535ZM15.6973 13.7348C15.6973 15.1155 14.578 16.2348 13.1973 16.2348C11.8166 16.2348 10.6973 15.1155 10.6973 13.7348C10.6973 12.3541 11.8166 11.2348 13.1973 11.2348C14.578 11.2348 15.6973 12.3541 15.6973 13.7348Z"
+                fill-rule="evenodd"/>
+        </svg>
+        <span class="mediumTextStyle">Wortsuche</span>
+      </a>
+
+      <div class="filter-bar">
+        <a (click)="handleOpenAllEntriesByFilter()"
+           (keydown.enter)="handleOpenAllEntriesByFilter()" class="filter-button all-entries" href
+           onclick="return false;" tabindex="0">
+          <div>
+            <div class="fachgebietIcon">
+              <fa-icon [icon]="iconForAll" class="alle-gebaerden"></fa-icon>
+            </div>
+            Alle Gebärden
+          </div>
+          <div class="font-light">{{entryCount}}</div>
+        </a>
+        <div class="fachgebiet-wrapper">
+          <a (click)="handleOpenAllEntriesByFilter(fachgebiet.title)"
+             (keydown.enter)="handleOpenAllEntriesByFilter(fachgebiet.title)"
+             *ngFor="let fachgebiet of fachgebiete" class="{{fachgebiet.title}} filter-button" href
+             onclick="return false;" tabindex="0">
+            <div>
+              <div class="fachgebietIcon">
+                <fa-icon [icon]="fachgebiet.icon" class="{{fachgebiet.title}}"></fa-icon>
+              </div>
+              {{fachgebiet.title}}
+            </div>
+            <div class="font-light">{{fachgebiet.count}}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

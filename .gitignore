@@ -1,0 +1,96 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+#IDEs
+.idea
+.vscode
+.project
+.classpath
+.c9
+*.launch
+.settings/
+*.sublime-workspace
+
+#Frontend
+# compiled output
+frontend/dist
+frontend/tmp
+frontend/out-tsc
+# Only exists if Bazel was run
+frontend/bazel-out
+
+# dependencies
+frontend/node_modules
+
+# profiling files
+frontend/chrome-profiler-events*.json
+frontend/speed-measure-plugin*.json
+
+# IDEs and editors
+frontend/.idea
+frontend/.project
+frontend/.classpath
+frontend/.c9/
+frontend/.settings/
+
+# IDE - VSCode
+frontend/.vscode/*
+!frontend/.vscode/settings.json
+!frontend/.vscode/tasks.json
+!frontend/.vscode/launch.json
+!frontend/.vscode/extensions.json
+frontend/.history/*
+
+# misc
+frontend/.sass-cache
+frontend/connect.lock
+frontend/coverage
+frontend/libpeerconnection.log
+frontend/npm-debug.log
+frontend/yarn-error.log
+frontend/testem.log
+frontend/typings
+
+# System Files
+frontend/.DS_Store
+frontend/Thumbs.db
+
+
+#Backend
+**/cachedThumbnails/*
+backend/HELP.md
+backend/target/
+!backend/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
+
+### IntelliJ IDEA ###
+backend/.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+backend/nbproject/private/
+backend/nbbuild/
+backend/dist/
+backend/nbdist/
+backend/.nb-gradle/
+backend/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+backend/.vscode/
+
+### Logs ###
+backend/logs/
+logs

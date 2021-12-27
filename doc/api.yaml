@@ -1,0 +1,349 @@
+openapi: 3.0.3
+info:
+  title: Sign2MINT-API
+  description: Dokumentation der API für die Sign2MINT-Homepage
+  version: 1.0.0
+servers:
+  - url: '/api/'
+tags:
+  - name: entries
+    description: Endpunkte zum Abfragen von Lexikoneinträgen
+paths:
+  /entries/all:
+    get:
+      summary: "Liefert alle bestehenden Lexikoneinträge"
+      operationId: "getAllEntries"
+      tags:
+        - entries
+      parameters:
+        - $ref: "#/components/parameters/fachgebiete"
+      responses:
+        "200":
+          $ref: "#/components/responses/lexikoneintraege"
+
+  /entries/all/{character}:
+    get:
+      summary: "Liefert alle bestehenden Lexikoneinträge eines Anfangsbuchstaben"
+      operationId: "getLexikoneintraegeForChar"
+      tags:
+        - entries
+      parameters:
+        - name: "character"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            example: 'a'
+        - $ref: "#/components/parameters/fachgebiete"
+      responses:
+        "200":
+          $ref: "#/components/responses/lexikoneintraege"
+  
+  /entries/count:
+    get:
+      summary: "Liefert die Anzahl aller bestehenden Fachbegriffe"
+      operationId: "getEntryCount"
+      tags:
+        - entries
+      parameters:
+        - $ref: "#/components/parameters/fachgebiete"
+      responses:
+        "200":
+          description: Anzahl der Einträge
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 1134
+
+  /entries/fachbegriff/{fachbegriff}:
+    get:
+      summary: "Liefert alle Lexikoneinträge für einen Fachbegriff"
+      operationId: "getLexikoneintragByFachbegriff"
+      tags:
+        - entries
+      parameters:
+        - $ref: "#/components/parameters/fachbegriff"
+        - $ref: "#/components/parameters/fachgebiete"
+      responses:
+        "200":
+          $ref: "#/components/responses/lexikoneintraege"
+  
+  /entries/id/{id}:
+    get:
+      summary: "Liefert den Lexikoneintrag zu einer ID"
+      operationId: "getLexikoneintragById"
+      tags:
+        - entries
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: Lexikoneintrag zu der Id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lexikoneintrag"
+  
+  /entries/search/{searchTerm}:
+    get:
+      summary: "Liefert alle Lexikoneinträge, die den Suchbegriff enthalten"
+      operationId: "getLexikoneintaegeForSearchTerm"
+      tags:
+        - entries
+      parameters:
+        - name: "searchTerm"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          $ref: "#/components/responses/lexikoneintraege"
+  
+  /entries/symbolIds:
+    post:
+      summary: "Liefert alle Lexikoneinträge für eine Liste an SymbolIds"
+      operationId: "findLexikoneintraegeForAllSymbolGroups"
+      tags:
+        - entries
+      parameters:
+        - $ref: "#/components/parameters/symbolId"
+      responses:
+        "200":
+          $ref: "#/components/responses/lexikoneintraege"
+  
+  /mail/send:
+    post:
+      summary: "Ermöglicht es Kontakt zum Sign2MINT-Team per E-Mail aufzunehmen"
+      operationId: "sendEmail"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - subject
+                - content
+              properties:
+                subject:
+                  type: string
+                  description: "Betreff der E-Mail"
+                  example: "Tolles Video!"
+                content:
+                  type: string
+                  description: "Inhalt der E-Mail"
+                  example: "Das Video hat mir sehr geholfen, bin jetzt RIESEN Fan!"
+      responses:
+        "200":
+          description: "Gibt an, ob die E-Mail erfolgreich ans Team geschickt werden konnte"
+          content:
+            application/json:
+              schema:
+                type: boolean
+  
+  /page/{pageName}:
+    get:
+      summary: "Liefert statische HTML-Seiten"
+      operationId: "getPage"
+      parameters:
+        - name: "pageName"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            example: "about"
+      responses:
+        "200":
+          description: "Das HTML der statischen Seite"
+          content:
+            application/json:
+              schema:
+                type: string
+                format: "html"
+  
+  /symbolIds/byKeys:
+    post:
+      summary: "Konvertiert eine Liste von SymbolKeys zu SymbolIds"
+      operationId: "getAllSymbolIds"
+      parameters:
+        - in: "query"
+          name: symbolKeys
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/symbolKey"
+      responses:
+        "200":
+          description: Liste der SymbolIds für die SymbolKeys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/symbolId"
+
+  /thumbnail/{id}:
+    get:
+      summary: "Liefert das Thumbnail zu einem Lexikoneintrag"
+      operationId: "getThumbnailFor"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Bytestream des Thumbnails"
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+
+components:
+  schemas:
+    id:
+      type: string
+      example: "1400421743287847:3616"
+
+    fachbegriff:
+      type: string
+      example: "Abstraktion"
+
+    fachgebiete:
+      type: string
+      example: "Mathematik,Biologie"
+
+    symbolKey:
+      type: string
+      example: "S1f323"
+
+    lexikoneintrag:
+      type: object
+      required:
+        - id
+        - fachbegriff
+        - videoLink
+        - fachgebiet
+        - ursprung
+        - verwendungskontext
+        - definition
+        - empfehlung
+        - variants
+        - gebaerdenschrift
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        fachbegriff:
+          $ref: "#/components/schemas/fachbegriff"
+        videoLink:
+          type: "string"
+          example: "https://apps.delegs.de/delegseditormedia/DelegsVideoSupplierServlet/W00703_Abstraktion2.mp4"
+        fachgebiet:
+          $ref: "#/components/schemas/fachgebiete"
+        ursprung:
+          type: "string"
+          example: "Bestand"
+        verwendungskontext:
+          type: "string"
+          example: "Schulischer Bereich"
+        definition:
+          type: "string"
+          example: "[1] aus einem höheren Blickwinkel betrachtet, Verallgemeinerung, Generalisierung"
+        empfehlung:
+          type: "boolean"
+          example: "false"
+        variants:
+          type: "integer"
+          example: "1"
+        gebaerdenschrift:
+          type: "string"
+          example: "https://apps.delegs.de/delegseditortest/signwritingeditor/signimages?upperId=29749&lowerId=ABSTRAKTION2&signlocale=DGS&transparent=true"
+
+    symbolId:
+      type: object
+      required:
+        - kategorie
+        - klassifikation
+        - symbolGruppe
+        - form
+        - variante
+        - bewegung
+        - füllung
+        - rotation
+        - symbolId
+        - symbolKey
+      properties:
+        kategorie:
+          type: string
+          pattern: '^\d{2}$'
+        klassifikation:
+          type: string
+          pattern: '^\d{2}$'
+        symbolGruppe:
+          type: string
+          pattern: '^\d{2}$'
+        form:
+          type: string
+          pattern: '^\d{3}$'
+        variante:
+          type: string
+          pattern: '^\d{2}$'
+        bewegung:
+          type: string
+          pattern: '^\d{2}$'
+        füllung:
+          type: string
+          pattern: '^\d{2}$'
+        rotation:
+          type: string
+          pattern: '^\d{2}$'
+        symbolId:
+          type: string
+          pattern: '^[X0-9]{2}-[X0-9]{2}-[X0-9]{3}-[X0-9]{2}-[X0-9]{2}-[X0-9]{2}$'
+        symbolKey:
+          $ref: "#/components/schemas/symbolKey"
+
+  parameters:
+    id:
+      name: "id"
+      in: "path"
+      description: Id zu einem Lexikoneintrag
+      required: true
+      schema:
+        $ref: "#/components/schemas/id"
+
+    fachbegriff:
+      name: "fachbegriff"
+      in: "query"
+      description: Fachbegriff nach dem gesucht werden soll
+      required: true
+      schema:
+        $ref: "#/components/schemas/fachgebiete"
+
+    fachgebiete:
+      name: "fachgebiete"
+      in: "query"
+      description: Liste an Fachgebieten, für welche die Einträge ermittelt werden sollen
+      required: false
+      schema:
+        $ref: "#/components/schemas/fachgebiete"
+
+    symbolId:
+      name: "symbolId"
+      in: "path"
+      description: SymbolIds der GebärdenSchrift von Lexikoneinträgen
+      required: true
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/symbolId"
+
+  responses:
+    lexikoneintraege:
+      description: Liste der Lexikoneinträge
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/lexikoneintrag"

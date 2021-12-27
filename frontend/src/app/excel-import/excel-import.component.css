@@ -1,0 +1,118 @@
+@import url("../animation/circleSpinner.css");
+
+.bottom-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.tile {
+  box-shadow: 0 0 20px var(--grey-30);
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 600px;
+}
+
+.tile-header {
+  align-self: flex-start;
+  background: var(--primary-60);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  width: 100%;
+  height: 4rem;
+}
+
+.content-area {
+  border-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 600px;
+}
+
+.content-area fa-icon {
+  font-size: 8rem;
+  align-self: center;
+  color: var(--grey-30);
+}
+
+.content-area span {
+  align-self: center;
+  text-align: center;
+  line-height: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  color: var(--primary-60);
+  font-size: var(--text-lg);
+}
+
+.button-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.button {
+  border: none;
+  height: 2rem;
+  width: 10rem;
+  text-align: center;
+  line-height: 2rem;
+  cursor: pointer;
+  background: var(--primary-60);
+}
+
+.button:disabled {
+  background: var(--grey-30);
+}
+
+.button:hover {
+  background: var(--primary-80);
+}
+
+.log-area {
+  height: 60%;
+  overflow-y: scroll;
+  margin-left: 2.5rem;
+  margin-right: 2rem;
+  color: var(--grey-70);
+  font-size: var(--text-base);
+}
+
+.file-container {
+  border-radius: 0.5rem;
+  border: var(--primary-80) dashed 1px;
+  margin: 2rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.file-container fa-icon {
+  font-size: 3rem;
+  color: var(--grey-30);
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  margin-left: auto;
+}
+
+.remove-button fa-icon {
+  font-size: 2rem;
+}
+
+.remove-button fa-icon:hover {
+  font-size: 2rem;
+  color: var(--primary-60);
+}
+

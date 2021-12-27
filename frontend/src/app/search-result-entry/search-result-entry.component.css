@@ -1,0 +1,39 @@
+.inner-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inner-card fa-icon {
+  margin-left: 0.5rem;
+  align-self: center;
+}
+
+.inner-card span {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.inner-card-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.75rem;
+}
+
+.gebaerdenschrift-container {
+  display: flex;
+  justify-content: center;
+}
+
+.gebaerdenschrift {
+  max-height: 10rem;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  object-fit: contain;
+  padding: 8px;
+  filter: invert(0);
+}

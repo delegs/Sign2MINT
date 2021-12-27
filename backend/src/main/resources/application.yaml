@@ -1,0 +1,28 @@
+sign2mint:
+  mailer:
+    smtp:
+      smtpHost: PLATZHALTER
+      smtpUser: PLATZHALTER
+      smtpPassword: PLATZHALTER
+    recipients:
+      s2mintler: PLATZHALTER
+      teamDelegs: PLATZHALTER
+    sender: PLATZHALTER
+    senderName: PLATZHALTER
+
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    root: INFO
+    org.springframework.web: WARN
+    guru.springframework.controllers: WARN
+    org.hibernate: WARN
+  file:
+    name: logs/backend.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+
+api_url: PLATZHALTER

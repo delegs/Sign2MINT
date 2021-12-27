@@ -1,0 +1,54 @@
+<div class="bottom-content-container o-container--medium">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <h1 class="s2m--headline">Kontakt</h1>
+    <div>
+      <label>Email</label>
+      <input
+        required
+        formControlName="contactMail"
+        name="contactMail"
+        class="sc-input"
+        id="contact_email"
+        (keydown)="onInputChanged()"
+        placeholder="E-Mail Adresse"/>
+
+    </div>
+    <div>
+      <label>Inhalt</label>
+      <textarea formControlName="content"
+                name="content"
+                class="sc-input"
+                rows="4"
+                id="contact_content"
+                placeholder="Inhalt"
+                (keydown)="onInputChanged()"
+                required minlength="1">
+    </textarea>
+      <div class="submitBar">
+        <ngx-recaptcha2 #captchaElem
+                        [siteKey]="siteKey"
+                        [useGlobalDomain]="false"
+                        [size]="size"
+                        [hl]="lang"
+                        [theme]="theme"
+                        [type]="type"
+                        tabIndex="0"
+                        formControlName="recaptcha">
+        </ngx-recaptcha2>
+
+        <button [class.buttonGreyed]="!contactForm.valid" [disabled]="!contactForm.valid" type="submit" tabindex="0"
+                (keydown.enter)="onSubmit()">Absenden
+        </button>
+
+      </div>
+    </div>
+    <!--  <div *ngIf=submitSuccessful>-->
+    <div *ngIf="sendingSuccessful" class="formFeedback sendEmailSuccessful">
+      Senden erfolgreich. <br>
+      Vielen Dank für die Einsendung.
+    </div>
+    <div *ngIf="sendingFailed" class="formFeedback sendEmailFailed">
+      Beim Senden ist ein Fehler aufgetreten
+    </div>
+  </form>
+</div>

@@ -1,0 +1,112 @@
+<div class="bottom-content-container">
+  <header>
+    <div class="header-content">
+      <div class="header-top">
+        <span>Filter</span>
+        <span class="done-button"
+              (click)="saveAndGoBack()">
+      Fertig
+    </span>
+
+      </div>
+      <div class="search-results">
+        <span class="result-text">{{searchResultCount}} Ergebnisse</span>
+        <span *ngIf="hasFiltersApplied()" class="reset-button"(click)="resetFilter()">Zurücksetzen</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-content">
+
+    <div class="filter-menu">
+
+      <!-- Fachgebiet -->
+      <div class="splitter"></div>
+      <div class="filter-category">
+        <div class="filter-category-header"
+             (click)="onFilterCategoryHeaderClicked(fachgebiet)">
+          <span>{{fachgebiet}}</span>
+          <fa-icon *ngIf="!isFachgebieteSelected"
+                   [icon]="faChevronDown"></fa-icon>
+          <fa-icon *ngIf="isFachgebieteSelected"
+                   [icon]="faChevronUp"></fa-icon>
+        </div>
+        <div *ngIf="isFachgebieteSelected">
+          <div *ngFor="let fachgebiet of fachgebiete"
+               (click)="onFachgebietClicked(fachgebiet)">
+            <div class="filterContainer" [class.filterContainerActive]="searchContext.includesFachgebiet(fachgebiet)">
+              <div class="filterIcon">
+                <fa-icon [icon]="fachgebiet.icon"
+                         class="{{fachgebiet.title}}"></fa-icon>
+              </div>
+              {{fachgebiet.title}}
+              <div *ngIf="searchContext.includesFachgebiet(fachgebiet) then checkedIcon else uncheckedIcon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ursprung -->
+      <div class="splitter"></div>
+      <div class="filter-category">
+        <div class="filter-category-header"
+             (click)="onFilterCategoryHeaderClicked(ursprung)">
+          <span>{{ursprung}}</span>
+          <fa-icon *ngIf="!isUrsprungSelected"
+                   [icon]="faChevronDown"></fa-icon>
+          <fa-icon *ngIf="isUrsprungSelected"
+                   [icon]="faChevronUp"></fa-icon>
+        </div>
+        <div *ngIf="isUrsprungSelected">
+          <div *ngFor="let ursprung of urspruenge"
+               (click)="onUrsprungClicked(ursprung)">
+            <div class="filterContainer" [class.filterContainerActive]="searchContext.includesUrsprung(ursprung)">
+              <div class="filterIcon">
+                <fa-icon [icon]="ursprung.icon"></fa-icon>
+              </div>
+              {{ursprung.title}}
+              <div *ngIf="searchContext.includesUrsprung(ursprung) then checkedIcon else uncheckedIcon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verwendungskontext -->
+      <div class="splitter"></div>
+      <div class="filter-category">
+        <div class="filter-category-header"
+             (click)="onFilterCategoryHeaderClicked(verwendungskontext)">
+          <span>{{verwendungskontext}}</span>
+          <fa-icon *ngIf="!isVerwendungskontextSelected"
+                   [icon]="faChevronDown"></fa-icon>
+          <fa-icon *ngIf="isVerwendungskontextSelected"
+                   [icon]="faChevronUp"></fa-icon>
+        </div>
+        <div *ngIf="isVerwendungskontextSelected">
+          <div *ngFor="let verwendungskontext of verwendungslkontexte"
+               (click)="onVerwendungskontextClicked(verwendungskontext)"
+               class="filter-item">
+            <div class="filterContainer" [class.filterContainerActive]="searchContext.includesVerwendungskontext(verwendungskontext)">
+              <div class="filterIcon-verwendungskontext">
+                <fa-icon [icon]="verwendungskontext.icon"></fa-icon>
+              </div>
+              {{verwendungskontext.title}}
+              <div *ngIf="searchContext.includesVerwendungskontext(verwendungskontext) then checkedIcon else uncheckedIcon"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="splitter"></div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #checkedIcon>
+  <fa-icon [icon]="faCheck" class="filter-checkedIcon"></fa-icon>
+</ng-template>
+<ng-template #uncheckedIcon>
+  <fa-icon [icon]="faSquare" class="filter-checkedIcon"></fa-icon>
+</ng-template>
+

@@ -1,0 +1,101 @@
+.sc-input {
+  border: 1px solid #aeb0b0;
+  padding: 1em .5em;
+  font-size: 1em;
+  margin-bottom: .5em;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  margin-bottom: 1rem;
+  margin-top: 1em;
+  padding: 1em 2em;
+  border: none;
+  background-color: #006c66;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: center;
+  width: fit-content;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
+}
+
+label {
+  font-weight: 700;
+  font-size: .7em;
+  display: block;
+  margin-top: 1em;
+  margin-bottom: .5em;
+}
+
+.formFeedback {
+  text-align: center;
+  font-weight: bold;
+  color: #202020;
+  margin-top: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.submitBar {
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.buttonGreyed {
+  background-color: #aaaaaa;
+}
+
+.sendEmailSuccessful {
+  background: #E7F5F1;
+}
+
+.sendEmailFailed {
+  background: #ff5050;
+}
+
+ngx-recaptcha2 {
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+
+  div {
+    width: 25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  div {
+    width: 35rem;
+  }
+
+  .submitBar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  button {
+    margin: unset;
+  }
+}
