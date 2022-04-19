@@ -9,7 +9,7 @@ import {PageService} from '../services/page.service';
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css'],
+  styleUrls: ['./page.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class PageComponent implements OnInit {

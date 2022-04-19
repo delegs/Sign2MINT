@@ -39,7 +39,7 @@ export class SignKeyboardUnicodes {
 
   public static readonly zweihandGebaerden = [
     new Gebaerde('񋺅', 'parallel'),
-    new Gebaerde('񋸥', 'symmetrisch'),
+    new Gebaerde('񋸥', 'entgegengesetzt'),
     new Gebaerde('񋻥', 'alternierend'),
     new Gebaerde('񋵡', 'nicht dominante Hand ist passiv'),
     new Gebaerde('񈘁', 'beide Hände führen im Kontakt die Bewegung aus')

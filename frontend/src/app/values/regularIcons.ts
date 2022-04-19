@@ -9,6 +9,7 @@ import {
   faGlobeAmericas,
   faTelescope,
   faNotesMedical,
+  faFilter,
 } from '@fortawesome/pro-regular-svg-icons';
 
 export class RegularIcons {
@@ -22,4 +23,5 @@ export class RegularIcons {
   public static readonly faGlobeAmericas = faGlobeAmericas;
   public static readonly faTelescope = faTelescope;
   public static readonly faNotesMedical = faNotesMedical;
+  public static readonly faFilter = faFilter;
 }

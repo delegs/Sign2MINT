@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {LexiconEntryService} from '../services/lexicon-entry.service';
 import {SymbolIdService} from '../services/symbol-id.service';
 import {AppSettings} from '../app.settings';
@@ -18,13 +18,14 @@ import {LightIcons} from '../values/lightIcons';
 import {SearchService} from '../services/search.service';
 import {RegularIcons} from '../values/regularIcons';
 import {delay} from 'rxjs/operators';
+import {ConfiguresHeaderVisibility} from '../header-configurator';
 
 @Component({
   selector: 'app-gebaerdenschrift-search',
   templateUrl: './gebaerdenschrift-search.component.html',
-  styleUrls: ['./gebaerdenschrift-search.component.css']
+  styleUrls: ['./gebaerdenschrift-search.component.scss', '../../switch-radio-group.scss']
 })
-export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy {
+export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy, ConfiguresHeaderVisibility {
 
   hideKeyboard = false;
 
@@ -38,7 +39,13 @@ export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy {
   faSquare = LightIcons.faSquare;
   faCheckCircle = LightIcons.faCheckCircle;
   faFilter = LightIcons.faFilter;
+  faFilterRegular = RegularIcons.faFilter;
   faArrowRight = RegularIcons.faLongArrowRight;
+  faSignLanguage = RegularIcons.faSignLanguage;
+
+  showHeaderDesktop = true;
+  showHeaderMobile = false;
+  showHeaderTablet = true;
 
   lexikonentryCount = 0;
   searchResultCount = 0;
@@ -83,12 +90,7 @@ export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private utilService: DeviceService,
     private searchService: SearchService
-  ) {
-  }
-
-  get isDesktop(): boolean {
-    return this.utilService.isDesktop();
-  }
+  ) {}
 
   get searchResultText(): string {
 
@@ -126,6 +128,22 @@ export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScrollWindow(event: any): void {
+    const mybutton = document.getElementById('goToTop-button');
+    const scrollThreshold = 200;
+    if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+      mybutton.style.display = 'block';
+    } else {
+      mybutton.style.display = 'none';
+    }
+  }
+
+  goToTop(): void {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 
   loadStateFromStorage(): void {
@@ -262,23 +280,8 @@ export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy {
     this.search();
   }
 
-  toggleMode(): void {
-    if (this.useISWAFont)
-    {
-      document.getElementById('my-button').style.transform = 'translateX(98px)';
-      this.useISWAFont = false;
-      document.getElementById('iswa').innerText = 'Zeichnung';
-      document.getElementById('zeichnung').innerText = 'ISWA';
-      document.getElementById('zeichnung').style.transform = 'translateX(-84px)';
-      document.getElementById('my-button').style.borderRadius = '0px 5px 5px 0px';
-    } else {
-      document.getElementById('my-button').style.transform = 'translateX(-2px)';
-      this.useISWAFont = true;
-      document.getElementById('iswa').innerText = 'ISWA';
-      document.getElementById('zeichnung').innerText = 'Zeichnung';
-      document.getElementById('zeichnung').style.transform = 'translateX(0px)';
-      document.getElementById('my-button').style.borderRadius = '5px 0px 0px 5px';
-    }
+  toggleMode(iswaMode: boolean): void {
+    this.useISWAFont = iswaMode;
   }
 
   showMore(): void {

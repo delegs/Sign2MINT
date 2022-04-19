@@ -2,7 +2,7 @@
 
 ## Frontend
 
-Das Frontend ist in Angular (11.0.5) und Typescript geschrieben. 
+Das Frontend ist in Angular (11.2.18) und Typescript geschrieben. 
 Als Paketmanager wird npm verwendet.
 
 ## Backend

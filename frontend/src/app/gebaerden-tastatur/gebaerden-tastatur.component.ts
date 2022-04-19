@@ -6,7 +6,7 @@ import {SolidIcons} from '../values/solidIcons';
 @Component({
   selector: 'app-gebaerden-tastatur',
   templateUrl: './gebaerden-tastatur.component.html',
-  styleUrls: ['./gebaerden-tastatur.component.css']
+  styleUrls: ['./gebaerden-tastatur.component.scss']
 })
 
 export class GebaerdenTastaturComponent {

@@ -11,13 +11,14 @@ import {Verwendungskontexte} from '../values/verwendungskontexte';
 import {LightIcons} from '../values/lightIcons';
 import {SearchService} from '../services/search.service';
 import {SolidIcons} from '../values/solidIcons';
+import {ConfiguresHeaderVisibility} from '../header-configurator';
 
 @Component({
   selector: 'app-search-filter',
   templateUrl: './search-filter.component.html',
-  styleUrls: ['./search-filter.component.css']
+  styleUrls: ['./search-filter.component.scss']
 })
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent implements OnInit, ConfiguresHeaderVisibility {
 
   faChevronUp = LightIcons.faChevronUp;
   faChevronDown = LightIcons.faChevronDown;
@@ -37,6 +38,10 @@ export class SearchFilterComponent implements OnInit {
   fachgebiet = 'Fachgebiet';
   ursprung = 'Ursprung';
   verwendungskontext = 'Verwendungskontext';
+
+  showHeaderDesktop = false;
+  showHeaderMobile = false;
+  showHeaderTablet = false;
 
   searchContext = new SearchContext(SearchMode.DGS);
 

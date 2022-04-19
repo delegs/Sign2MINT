@@ -10,26 +10,16 @@ import {LightIcons} from '../values/lightIcons';
 @Component({
   selector: 'app-search-menu',
   templateUrl: './search-menu.component.html',
-  styleUrls: ['./search-menu.component.css']
+  styleUrls: ['./search-menu.component.scss']
 })
-export class SearchMenuComponent implements OnInit {
+export class SearchMenuComponent {
 
   faText = LightIcons.faText;
-  isSmallMobile = false;
 
   constructor(
-    private utilService: DeviceService,
     private router: Router,
     private localStorageService: LocalStorageService
     ) { }
-
-  ngOnInit(): void {
-    this.isSmallMobile = this.utilService.isSmallMobile();
-  }
-
-  onResize(): void {
-    this.isSmallMobile = this.utilService.isSmallMobile();
-  }
 
   navigateToSearch(searchContent: string): void {
     this.localStorageService.set(AppSettings.LocalStorageHideKeyboard, false);

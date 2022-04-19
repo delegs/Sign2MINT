@@ -11,7 +11,7 @@ import {Fachgebiete} from '../values/fachgebiete';
 @Component({
   selector: 'app-search-result-entry',
   templateUrl: './search-result-entry.component.html',
-  styleUrls: ['./search-result-entry.component.css']
+  styleUrls: ['./search-result-entry.component.scss']
 })
 export class SearchResultEntryComponent implements OnInit {
 

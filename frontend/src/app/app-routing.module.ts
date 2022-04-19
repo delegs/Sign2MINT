@@ -27,6 +27,9 @@ const routes: Routes = [
   {path: 'search/gebaerdensuche', component: GebaerdenschriftSearchComponent},
   {path: 'search/gebaerdensuche/filter', component: SearchFilterComponent},
   {path: 'import', component: ExcelImportComponent},
+
+  // 404 Not Found: This line needs to be at the bottom
+  {path: '**', pathMatch: 'full', component: EntryNotFoundComponent}
 ];
 
 @NgModule({

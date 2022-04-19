@@ -118,6 +118,9 @@ public class LexikoneintragRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.allEintraege.clear();
+        this.allEintraege.addAll(apiLexikoneintraege);
     }
 
     public List<Lexikoneintrag> findAll() {

@@ -11,14 +11,12 @@ describe('LandingpageComponent', () => {
   let fixture: ComponentFixture<LandingpageComponent>;
   const routerMock = mock(Router);
   const lexiconEntryServiceMock = mock(LexiconEntryService);
-  const utilService = mock(DeviceService);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LandingpageComponent],
       providers: [
         {provide: Router, useValue: instance(routerMock)},
         {provide: LexiconEntryService, useValue: instance(lexiconEntryServiceMock)},
-        {provide: DeviceService, useValue: instance(utilService)}
       ]
     })
       .compileComponents();
@@ -30,7 +28,6 @@ describe('LandingpageComponent', () => {
     // Arrange
     when(lexiconEntryServiceMock.getEntryCount()).thenReturn(of(totalCount));
     when(lexiconEntryServiceMock.getEntryCount(anything())).thenReturn(of(42));
-    when(utilService.isDesktop()).thenReturn(true);
 
     // Act
     resetCalls(lexiconEntryServiceMock);

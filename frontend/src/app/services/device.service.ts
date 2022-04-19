@@ -4,24 +4,32 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DeviceService {
-  private readonly SMALL_MOBILE_MAX_WIDTH = 391;
-  private readonly TABLET_MIN_WIDTH = 768;
-  private readonly DESKTOP_MIN_WIDTH = 1024;
   constructor(private window: Window) { }
 
+  /**
+   * @deprecated Should be done via CSS
+   */
   isMobile(): boolean{
-    return this.window.innerWidth < this.TABLET_MIN_WIDTH;
+    return this.convertVarToBoolean('--is-mobile');
   }
 
+  /**
+   * @deprecated Should be done via CSS
+   */
   isTablet(): boolean{
-    return this.window.innerWidth >= this.TABLET_MIN_WIDTH && this.window.innerWidth < this.DESKTOP_MIN_WIDTH;
+    return this.convertVarToBoolean('--is-tablet');
   }
 
+  /**
+   * @deprecated Should be done via CSS.
+   * To show an element on desktop only, for example, use Tailwind classes: 'hidden lg:block'
+   */
   isDesktop(): boolean{
-    return this.window.innerWidth >= this.DESKTOP_MIN_WIDTH;
+    return this.convertVarToBoolean('--is-desktop');
   }
 
-  isSmallMobile(): boolean{
-    return this.window.innerWidth < this.SMALL_MOBILE_MAX_WIDTH;
+  private convertVarToBoolean(variable: string): boolean {
+    const value = getComputedStyle(document.body).getPropertyValue(variable);
+    return value === 'true' ? true : false;
   }
 }

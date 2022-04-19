@@ -45,6 +45,8 @@ public class LexikonEintragMapper {
 
         } catch (IndexOutOfBoundsException e) {
             LOGGER.warn("Der Eintrag " + eintrag.get(Lexikoneintrag.GebaerdenSchriftenMemberName).getAsJsonObject().get(FachbegriffMemberName).getAsString() + " hat keinen Gebärdenschriftlink");
+        } catch (NullPointerException e) {
+            LOGGER.warn("Der Eintrag " + eintrag.get(IdMemberName).getAsString() + " hat keinen Gebärdenschriftlink");
         }
 
         String videoLink = eintrag.get(VideoUrlnMemberName).getAsString().trim();

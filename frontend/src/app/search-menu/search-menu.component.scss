@@ -1,0 +1,54 @@
+.wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+.button {
+  color: #106C65;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: normal;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.2rem;
+  border: white 1px solid;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+  margin-right: 0.5rem;
+  fill: #106C65;
+
+}
+
+.search-label {
+  display: none;
+}
+
+@media (min-width: 391px) {
+  .wrapper {
+    gap: 0.5rem;
+  }
+
+  .search-label {
+    display: block;
+  }
+}
+
+@media (min-width: 400px) {
+  .wrapper {
+    gap: 1rem;
+  }
+}
+
+@screen md {
+  .wrapper {
+    gap: 2rem;
+  }
+
+}

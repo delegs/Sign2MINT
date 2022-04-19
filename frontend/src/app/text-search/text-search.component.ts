@@ -10,14 +10,15 @@ import {Router} from '@angular/router';
 import {LexiconEntry} from '../material/lexiconEntry';
 import {LightIcons} from '../values/lightIcons';
 import {RegularIcons} from '../values/regularIcons';
+import {ConfiguresHeaderVisibility} from '../header-configurator';
 
 @Component({
   selector: 'app-text-search',
   templateUrl: './text-search.component.html',
-  styleUrls: ['./text-search.component.css']
+  styleUrls: ['./text-search.component.scss']
 })
 
-export class TextSearchComponent implements OnInit, AfterViewInit {
+export class TextSearchComponent implements OnInit, AfterViewInit, ConfiguresHeaderVisibility {
 
   hideKeyboard = false;
 
@@ -35,9 +36,9 @@ export class TextSearchComponent implements OnInit, AfterViewInit {
   searching = false;
   isFocus = true;
 
-  get isDesktop(): boolean {
-    return this.deviceService.isDesktop();
-  }
+  showHeaderDesktop = true;
+  showHeaderMobile = false;
+  showHeaderTablet = false;
 
   get searchResultText(): string {
 

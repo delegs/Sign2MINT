@@ -1,5 +1,5 @@
 <!-- Mobile View -->
-<div *ngIf="!isDesktop">
+<div class="block md:hidden">
   <header>
     <div class="header-content">
       <div class="header-button"
@@ -7,13 +7,15 @@
         <fa-icon [icon]="faChevronLeft"></fa-icon>
       </div>
       <form>
-        <input #gebaerdensucheInput
-               (focus)="onFocus()"
-               (click)="setFocus(true)"
-               [(ngModel)]="searchContext.gebaerdenInput"
-               [readOnly]="true"
-               inputmode="none"
-               name="gebaerdensucheInput"/>
+        <input
+          id="gebaerdensucheInput"
+          #gebaerdensucheInput
+          (focus)="onFocus()"
+          (click)="setFocus(true)"
+          [(ngModel)]="searchContext.gebaerdenInput"
+          [readOnly]="true"
+          inputmode="none"
+          name="gebaerdensucheInput"/>
 
         <div class="header-button form-button" (click)="clearSearch()">
           <fa-icon [icon]="faTimes"></fa-icon>
@@ -68,6 +70,7 @@
         </div>
       </div>
     </div>
+    <div class="searchResultFooter"></div>
     <app-gebaerden-tastatur (buttonClicked)="onGebaerdenTastaturClick($event)"
                             (isFocusChange)="isFocusChange($event)"
                             [inputString]="searchContext.gebaerdenInput"
@@ -76,12 +79,14 @@
   </div>
 </div>
 
-<!-- Desktop View -->
-<div *ngIf="isDesktop">
+<!-- Tablet/Desktop View -->
+<div class="hidden md:block">
+
+  <button (click)="goToTop()" id="goToTop-button" title="Nach Oben" class="goToTop-button shadow-lg">Nach Oben</button>
 
   <!-- Main-Header -->
 
-  <div class="main-grid bottom-content-container">
+  <div class="main-grid">
 
     <!-- Search-Header -->
     <div class="header text-xl font-medium">
@@ -97,16 +102,7 @@
               fill-rule="evenodd"/>
       </svg>
 
-       <!-- Switch ISWA -->
-      <div class="switchMode-container">
-        <div (click)="toggleMode()"
-          id='button-container'class="switchMode-button" >
-          <div id='my-button' class="switchMode-button-element">
-            <p id='iswa'>ISWA</p>
-          </div>
-        <p id='zeichnung'>Zeichnung</p>
-        </div>
-      </div>
+      <span class="text-xl font-normal text-grey-80">Gebärdensuche</span>
 
       <div *ngIf="searchContext.gebaerdenInput.length > 0"
         class="searchContent">
@@ -155,9 +151,9 @@
                   d="M15.2026 16.535C14.6176 16.9744 13.8905 17.2348 13.1025 17.2348C11.1695 17.2348 9.60254 15.6678 9.60254 13.7348C9.60254 11.8018 11.1695 10.2348 13.1025 10.2348C15.0355 10.2348 16.6025 11.8018 16.6025 13.7348C16.6025 14.5228 16.3422 15.2499 15.9027 15.8349C15.9213 15.8489 15.9392 15.8643 15.9561 15.8812L17.4561 17.3812C17.6514 17.5765 17.6514 17.8931 17.4561 18.0884C17.2608 18.2836 16.9442 18.2836 16.749 18.0884L15.249 16.5884C15.2321 16.5714 15.2166 16.5536 15.2026 16.535ZM15.6025 13.7348C15.6025 15.1155 14.4833 16.2348 13.1025 16.2348C11.7218 16.2348 10.6025 15.1155 10.6025 13.7348C10.6025 12.3541 11.7218 11.2348 13.1025 11.2348C14.4833 11.2348 15.6025 12.3541 15.6025 13.7348Z"
                   fill-rule="evenodd"/>
           </svg>
-          <span class="text-xl font-medium">DGS<fa-icon [icon]="faArrowRight"></fa-icon>Deutsch</span>
+          <span class="text-xl font-medium text-grey-80">DGS<fa-icon [icon]="faArrowRight"></fa-icon>Deutsch</span>
           <a routerLink="/page/gebaerdensuchinformation"><u>Wie funktioniert die Gebärdensuche?</u></a>
-          <span class="font-light">Beschreibe die gesuchte Gebärde möglichst genau. Wende Filter an, um die Ergebnisse einzuschränken.</span>
+          <span class="font-light text-grey-80">Beschreibe die gesuchte Gebärde möglichst genau. Wende Filter an, um die Ergebnisse einzuschränken.</span>
         </div>
 
       </div>
@@ -175,16 +171,48 @@
               </div>
             </a>
           </ng-template>
-          <div class="showMoreButton" *ngIf="visibleEndIndex < searchContext.searchResultEntries.length - 1"
-               (click)="showMore()">
-            Mehr anzeigen
-          </div>
+
+        </div>
+        <div class="showMoreButton" *ngIf="visibleEndIndex < searchContext.searchResultEntries.length - 1"
+             (click)="showMore()">
+          Mehr anzeigen
         </div>
       </div>
     </div>
 
     <!-- Auswahlmenü -->
     <div class="leftMenu">
+
+      <!-- Kategorie Gebärde -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <div class="leftMenuCategory py-2">
+          <div>
+            <fa-icon [icon]="faSignLanguage" class="category-icon"></fa-icon>
+            <span class="category-header">Gebärde</span>
+          </div>
+
+          <!-- Switch ISWA -->
+          <div class="switch-radio-group">
+            <input type="radio" name="mode-switch" id="iswa" checked (change)="toggleMode(true)">
+            <label for="iswa">
+              <app-icon-spacer>
+                <span class="app-icon-spacer-icon" style="line-height: 1.4rem; font-size: 1rem; height: 1rem">񀀁</span>
+                <span class="text-xs">ISWA</span>
+              </app-icon-spacer>
+            </label>
+            <input type="radio" name="mode-switch" id="zeichnung" (change)="toggleMode(false)">
+            <label for="zeichnung">
+              <app-icon-spacer>
+                <span class="app-icon-spacer-icon"
+                      style="line-height: 1.0rem; font-size: 1.25rem; width: 1rem; margin-left: -0.25rem; font-family: delegsSignWritingOneD-WIP5;">񀀁</span>
+                <span class="text-xs">Zeichnung</span>
+              </app-icon-spacer>
+            </label>
+          </div>
+
+        </div>
+      </div>
 
       <!-- Handform -->
       <hr class="menuItemSplitter">
@@ -194,7 +222,7 @@
            href
            onclick="return false;">
           <span class="filter-header">{{handFormMenuName}}</span>
-          <div class="color-grey-90">
+          <div class="text-grey-90">
             <fa-icon
               *ngIf="searchContext.includesHandformen()"
               [icon]="faCheckCircle"
@@ -231,7 +259,7 @@
            href
            onclick="return false;">
           <span class="filter-header">{{zweihandGebaerdenMenuName}}</span>
-          <div class="color-grey-90">
+          <div class="text-grey-90">
             <fa-icon
               *ngIf="searchContext.includes2HandGebaerde()"
               [icon]="faCheckCircle"
@@ -269,7 +297,7 @@
            href
            onclick="return false;">
           <span class="filter-header">{{kontaktMenuName}}</span>
-          <div class="color-grey-90">
+          <div class="text-grey-90">
             <fa-icon
               *ngIf="searchContext.includesKontakte()"
               [icon]="faCheckCircle"
@@ -307,7 +335,7 @@
            href
            onclick="return false;">
           <span class="filter-header">{{bewegungMenuName}}</span>
-          <div class="color-grey-90">
+          <div class="text-grey-90">
             <fa-icon
               *ngIf="searchContext.includesBewegungen()"
               [icon]="faCheckCircle"
@@ -337,6 +365,17 @@
         </div>
       </div>
 
+      <!-- Kategorie Filter -->
+      <hr class="menuItemSplitter">
+      <div class="leftMenuItem">
+        <div class="leftMenuCategory py-4">
+          <div>
+            <fa-icon [icon]="faFilterRegular" class="category-icon"></fa-icon>
+            <span class="category-header">Filter</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Fachgebiet -->
       <hr class="menuItemSplitter">
       <div class="leftMenuItem">
@@ -345,7 +384,7 @@
            href
            onclick="return false;">
           <span class="filter-header">{{fachgebietMenuName}}</span>
-          <div class="color-grey-90">
+          <div class="text-grey-90">
             <fa-icon
               *ngIf="searchContext.fachgebietsFilter.length > 0"
               [icon]="faCheckCircle"
@@ -378,7 +417,7 @@
              href
              onclick="return false;">
             <span class="filter-header">{{ursprungMenuName}}</span>
-            <div class="color-grey-90">
+            <div class="text-grey-90">
               <fa-icon
                 *ngIf="searchContext.ursprungFilter.length > 0"
                 [icon]="faCheckCircle"
@@ -411,7 +450,7 @@
              href
              onclick="return false;">
             <span class="filter-header">{{verwendungskontextMenuName}}</span>
-            <div class="color-grey-90">
+            <div class="text-grey-90">
               <fa-icon
                 *ngIf="searchContext.verwendungskontextFilter.length > 0"
                 [icon]="faCheckCircle"

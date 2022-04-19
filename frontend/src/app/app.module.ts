@@ -33,7 +33,8 @@ import {GebaerdenTastaturComponent} from './gebaerden-tastatur/gebaerden-tastatu
 import {SearchFilterComponent} from './search-filter/search-filter.component';
 import {ExcelImportComponent} from './excel-import/excel-import.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {SafeHtmlPipe} from './pipe/safe-html.pipe';
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
+import { IconSpacerComponent } from './icon-spacer/icon-spacer.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {SafeHtmlPipe} from './pipe/safe-html.pipe';
     SearchFilterComponent,
     ExcelImportComponent,
     SafeHtmlPipe,
+    IconSpacerComponent,
   ],
   imports: [
     BrowserModule,

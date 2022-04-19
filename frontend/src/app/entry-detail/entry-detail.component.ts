@@ -29,7 +29,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 @Component({
   selector: 'app-entry-detail',
   templateUrl: './entry-detail.component.html',
-  styleUrls: ['./entry-detail.component.css']
+  styleUrls: ['./entry-detail.component.scss']
 })
 
 export class EntryDetailComponent implements OnInit, OnDestroy, AfterViewInit {

@@ -14,7 +14,7 @@ import {LightIcons} from '../values/lightIcons';
 @Component({
   selector: 'app-landingpage',
   templateUrl: './landingpage.component.html',
-  styleUrls: ['./landingpage.component.css']
+  styleUrls: ['./landingpage.component.scss']
 })
 export class LandingpageComponent implements OnInit {
 
@@ -22,16 +22,11 @@ export class LandingpageComponent implements OnInit {
   iconForAll = LightIcons.faSignLanguage;
   fachgebiete = Fachgebiete.getAll();
 
-  get isDesktop(): boolean {
-    return this.utilService.isDesktop();
-  }
-
   constructor(
     private router: Router,
     private lexiconEntryService: LexiconEntryService,
     private scrollService: ScrollService,
     private localStorageService: LocalStorageService,
-    private utilService: DeviceService,
   ) {}
 
   ngOnInit(): void {

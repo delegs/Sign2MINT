@@ -6,7 +6,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 @Component({
   selector: 'app-excel-import',
   templateUrl: './excel-import.component.html',
-  styleUrls: ['./excel-import.component.css']
+  styleUrls: ['./excel-import.component.scss']
 })
 export class ExcelImportComponent implements OnInit {
 

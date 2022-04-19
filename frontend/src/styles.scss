@@ -1,0 +1,535 @@
+/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import '~swiper/swiper-bundle.min.css';
+
+@font-face {
+  font-family: "SuttonSignWritingLine";
+  src:
+    local('SuttonSignWritingLine'),
+    url('https://unpkg.com/@sutton-signwriting/font-ttf@1.0.0/font/SuttonSignWritingLine.ttf') format('truetype');
+}
+@font-face {
+  font-family: "SuttonSignWritingFill";
+  src:
+    local('SuttonSignWritingFill'),
+    url('https://unpkg.com/@sutton-signwriting/font-ttf@1.0.0/font/SuttonSignWritingFill.ttf') format('truetype');
+}
+@font-face {
+  font-family: "SuttonSignWritingOneD";
+  src:
+    local('SuttonSignWritingOneD'),
+    url('https://unpkg.com/@sutton-signwriting/font-ttf@1.0.0/font/SuttonSignWritingOneD.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "delegsSignWritingOneD-WIP5";
+  src:
+    local('delegsSignWritingOneD-WIP5'),
+    url('assets/fonts/delegsSignWritingOneD-WIP5.ttf') format('truetype');
+}
+
+@mixin setupBreakpoints($breakpoints) {
+  @each $breakpoint in $breakpoints {
+    @screen #{$breakpoint} {
+      :root {
+        --screen-breakpoint: #{$breakpoint};
+        @content
+      }
+    }
+  }
+}
+
+:root {
+  --screen-breakpoint:mobile;
+  --is-mobile:true;
+  --is-tablet:false;
+  --is-desktop:false;
+}
+
+@include setupBreakpoints([sm]);
+
+@include setupBreakpoints([md]) {
+  --is-mobile:false;
+  --is-tablet:true;
+  --is-desktop:false;
+}
+
+@include setupBreakpoints([lg, xl, 2xl]) {
+  --is-mobile:false;
+  --is-tablet:false;
+  --is-desktop:true;
+}
+
+/* Text sizes */
+
+@mixin setupTextSize($name, $size, $size-lg) {
+  :root {
+    --text-#{$name}: #{$size};
+  }
+
+  .text-#{$name} {
+    font-style: normal;
+    font-size: var(--text-#{$name});
+    line-height: normal;
+    word-break: break-word;
+  }
+
+  @screen lg {
+    :root {
+      --text-#{$name}: #{$size-lg};
+    }
+  }
+}
+
+@include setupTextSize(tiny, 0.75rem, 0.8125rem);
+@include setupTextSize(xs, 0.875rem, 0.9375rem);
+@include setupTextSize(sm, 1rem, 1.0625rem);
+@include setupTextSize(base, 1.125rem, 1.125rem);
+@include setupTextSize(lg, 1.25rem, 1.375rem);
+@include setupTextSize(xl, 1.5rem, 1.625rem);
+@include setupTextSize(2xl, 1.75rem, 2rem);
+@include setupTextSize(3xl, 2rem, 2.25rem);
+
+:root {
+
+  --swiper-navigation-size: 20px;
+  --swiper-navigation-color: #106C65;
+  --swiper-pagination-color: #106C65;
+
+  --header-height: 60px;
+
+  /* Fachbereiche */
+  --physik-color: #c45e00;
+  --chemie-color: #bc9f00;
+  --biologie-color: #009300;
+  --geowissenschaft-color: #0085bd;
+  --medizin-color: #880088;
+  --mathematik-color: #c90022;
+  --informatik-color: #772121;
+  --astronomie-color: #5537ED;
+
+  // Colors should be referenced in tailwind.config.js them.colors
+  --white: #FFFFFF;
+  --grey-05: #f9fafb;
+  --grey-10: #f3f4f6;
+  --grey-20: #e5e7eb;
+  --grey-30: #d1d5db;
+  --grey-40: #9ca3af;
+  --grey-50: #6B7280;
+  --grey-60: #4B5563;
+  --grey-70: #374151;
+  --grey-80: #1F2937;
+  --grey-90: #111827;
+
+  --primaryText: var(--grey-90);
+
+  --primary-05: #F5FAF8;
+  --primary-10: #E9F7F2;
+  --primary-20: #C8E8E0;
+  --primary-30: #A3D1C8;
+  --primary-40: #7DBAB0;
+  --primary-50: #4B9C91;
+  --primary-60: #31827A;
+  --primary-70: #19665E;
+  --primary-80: #0B4743;
+  --primary-90: #02302E;
+
+  /* Font weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets {
+  left: 25%;
+  width: 50%;
+}
+
+.swiper-button-prev {
+  top: 95%;
+}
+
+.swiper-button-next {
+  top: 95%;
+}
+
+/* Font weights */
+
+.font-light {
+  font-weight: var(--font-light);
+}
+
+.font-normal {
+  font-weight: var(--font-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-medium);
+}
+
+.font-bold {
+  font-weight: var(--font-bold);
+}
+
+body {
+  font-family: 'Roboto', sans-serif, 'SuttonSignWritingOneD';
+  font-style: normal;
+  font-weight: var(--font-normal);
+  font-size: var(--text-base);
+  line-height: 150%;
+  @apply text-grey-90;
+  margin: 0;
+  width: auto;
+}
+
+p {
+  font-style: normal;
+  font-weight: var(--font-normal);
+  font-size: var(--text-base);
+  line-height: 175%;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-medium);
+  font-size: var(--text-base);
+  line-height: normal;
+  text-decoration: none;
+  @apply text-primary-60;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.caption {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-size: var(--text-xs);
+  line-height: normal;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.overline {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-size: var(--text-xs);
+  font-weight: var(--font-normal);
+  line-height: normal;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.small-overline {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-size: var(--text-tiny);
+  font-weight: var(--font-normal);
+  line-height: normal;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.standard {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: var(--text-base);
+  line-height: 150%;
+}
+
+.button {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-medium);
+  font-size: var(--text-base);
+  line-height: normal;
+  color: white;
+}
+
+h5 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-bold);
+  font-size: var(--text-base);
+  line-height: normal;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-medium);
+  font-size: var(--text-lg);
+  line-height: normal;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-medium);
+  font-size: var(--text-xl);
+  line-height: normal;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-bold);
+  font-size: var(--text-2xl);
+  line-height: normal;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: var(--font-medium);
+  font-size: var(--text-3xl);
+  line-height: normal;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+app-icon-spacer {
+  gap: 0.5rem;
+}
+
+.sc-input, input {
+  font-family: 'Roboto', sans-serif;
+}
+
+.s2m--headline {
+  @apply text-primary-60;
+}
+
+.s2m--subheadline {
+  @apply text-primary-60;
+}
+
+/* ALLGEMEIN */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0.2rem;
+  margin: 0 0 1em;
+  table-layout: auto;
+  max-width: 100%;
+  @apply rounded-t-2xl overflow-hidden shadow-md;
+}
+
+th, caption, td {
+  @apply px-4;
+}
+
+th, caption {
+  @apply bg-primary-60;
+  @apply font-medium;
+  @apply text-primary-05;
+}
+
+caption {
+  @apply pt-4;
+}
+
+th {
+  @apply py-4;
+  text-align: left;
+}
+
+td {
+  text-align: left;
+  @apply py-4;
+}
+
+tbody tr {
+  @apply border-b border-grey-20;
+}
+
+tbody tr:nth-of-type(even) {
+  @apply bg-grey-05;
+}
+
+tbody tr:last-of-type {
+  @apply border-b-2 border-primary-50;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1 {
+  word-break: break-word;
+}
+
+h2 {
+  word-break: break-word;
+}
+
+.o-container--xlarge {
+  max-width: 78em;
+  margin: auto;
+}
+
+.o-container {
+  margin: auto;
+}
+
+.o-container--medium {
+  max-width: 48rem;
+  margin: auto;
+}
+
+.alle-gebaerden {
+  @apply text-primary-60;
+}
+
+/*Fachgebiet-Styles*/
+.Physik {
+  color: var(--physik-color);
+}
+
+.Chemie {
+  color: var(--chemie-color);
+}
+
+.Biologie {
+  color: var(--biologie-color);
+}
+
+.Geowissenschaft {
+  color: var(--geowissenschaft-color);
+}
+
+.Medizin {
+  color: var(--medizin-color);
+}
+
+.Mathematik {
+  color: var(--mathematik-color);
+}
+
+.Informatik {
+  color: var(--informatik-color);
+}
+
+.Astronomie {
+  color: var(--astronomie-color);
+}
+
+.swiper-container {
+  padding-bottom: 1.5rem;
+  width: 100%;
+}
+
+.swiper-slide {
+  color: #000;
+  text-align: center;
+  margin-bottom: 0;
+  height: auto;
+}
+
+.mobileShow {
+  display: inline;
+}
+
+.desktopShow {
+  display: none;
+}
+
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+:focus {
+  outline: var(--primary-60) auto 1px;
+}
+
+/* FONTS - DESKTOP */
+@screen lg {
+
+  body {
+    line-height: 27px;
+    min-height: 100vh;
+  }
+
+  .caption {
+    line-height: 22px;
+  }
+
+  .standard {
+    line-height: 27px;
+  }
+
+  .button {
+    line-height: 27px;
+  }
+
+  h4 {
+    font-weight: 600;
+    line-height: 33px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    line-height: 44px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    line-height: 55px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    line-height: 71px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .content-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .bottom-content-container {
+    max-width: 1024px;
+    margin: 0 auto 3rem;
+    display: block;
+  }
+
+  .mobileShow {
+    display: none;
+  }
+
+  .desktopShow {
+    display: inline;
+  }
+}

@@ -1,0 +1,50 @@
+$corner-radius:2xl;
+$text-color:grey-60;
+$border-color:grey-40;
+
+.switch-radio-group {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  @apply border-#{$border-color} border;
+  @apply rounded-#{$corner-radius};
+}
+
+.switch-radio-group > label {
+  @apply px-4 py-2;
+  @apply text-#{$text-color};
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.switch-radio-group > label:hover {
+  @apply bg-grey-05;
+  @apply text-grey-80;
+  border: 1px solid var(--grey-60);
+  margin: -1px;
+}
+
+.switch-radio-group > label:not(:last-of-type) {
+  @apply border-#{$border-color} border-r;
+}
+
+.switch-radio-group > input[type="radio"] {
+  display: none;
+}
+
+.switch-radio-group > input:checked + label {
+  @apply bg-primary-10;
+  @apply text-primary-70;
+  border-color: transparent;
+  border: 1px solid var(--primary-60);
+  margin: -1px;
+}
+
+.switch-radio-group > input + label:first-of-type {
+  @apply rounded-l-#{$corner-radius};
+}
+
+.switch-radio-group > input + label:last-of-type {
+  @apply rounded-r-#{$corner-radius};
+}

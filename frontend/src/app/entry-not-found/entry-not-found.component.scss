@@ -1,0 +1,11 @@
+.bg-image {
+  background: url('../../assets/images/Logo Background Pattern@2x.png');
+  background-size: auto 256px;
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+}
+
+.bg-gradient {
+  background: radial-gradient(#E8F7F2, #ECF6CD);
+  background-size: cover;
+}

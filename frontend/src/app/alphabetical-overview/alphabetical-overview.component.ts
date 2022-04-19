@@ -17,7 +17,7 @@ import {IconStyle} from '../values/iconStyles';
 @Component({
   selector: 'app-alphabetical-overview',
   templateUrl: './alphabetical-overview.component.html',
-  styleUrls: ['./alphabetical-overview.component.css']
+  styleUrls: ['./alphabetical-overview.component.scss']
 })
 export class AlphabeticalOverviewComponent implements OnInit, OnDestroy {
   alphabet = [];
@@ -79,6 +79,26 @@ export class AlphabeticalOverviewComponent implements OnInit, OnDestroy {
         .then(entriesForCharacter => this.alphabet[26].entries.push(...entriesForCharacter))
     );
 
+    promisesForCharacters.push(
+      this.lexiconEntryService.getAllEntriesForCharacter('Ä', fachgebiet).toPromise()
+        .then(entriesForCharacter => this.alphabet[0].entries.push(...entriesForCharacter))
+    );
+
+    promisesForCharacters.push(
+      this.lexiconEntryService.getAllEntriesForCharacter('Ö', fachgebiet).toPromise()
+        .then(entriesForCharacter => this.alphabet[14].entries.push(...entriesForCharacter))
+    );
+
+    promisesForCharacters.push(
+      this.lexiconEntryService.getAllEntriesForCharacter('Ü', fachgebiet).toPromise()
+        .then(entriesForCharacter => this.alphabet[20].entries.push(...entriesForCharacter))
+    );
+
+    promisesForCharacters.push(
+      this.lexiconEntryService.getAllEntriesForCharacter('@', fachgebiet).toPromise()
+        .then(entriesForCharacter => this.alphabet[0].entries.push(...entriesForCharacter))
+    );
+
     await Promise.all(promisesForCharacters);
 
     this.scrollingReady = true;
@@ -105,19 +125,28 @@ export class AlphabeticalOverviewComponent implements OnInit, OnDestroy {
     window.location.hash = hash;
 
     const element = document.getElementById(hash);
-    const yOffset = this.deviceService.isDesktop() ? -200 : this.deviceService.isTablet() ? -170 : -150;
-    const y = element.offsetTop + yOffset;
-
-
-    if (this.deviceService.isMobile()) {
-      window.scrollTo(0, 0);
-    } else {
-      window.scrollTo({top: y, behavior: 'auto'});
+    const overviewTop = document.getElementById('overview-top');
+    let headerOffset = 0;
+    try {
+      const header = document.getElementsByTagName('app-header')[0] as HTMLElement;
+      headerOffset = header.offsetHeight;
     }
+    finally {
+      const yOffset = overviewTop.offsetHeight + headerOffset;
+      console.log('Offset Height: ', yOffset);
+      const y = element.offsetTop - yOffset;
 
-    const cssClassQuerySelectorsForOuterCard = Array.from(document.querySelectorAll('.outer-card'));
-    const sortedCssClassQuerySelectorsForOuterCard = cssClassQuerySelectorsForOuterCard.sort();
-    this.focusElementByChar(hash, sortedCssClassQuerySelectorsForOuterCard);
+      if (this.deviceService.isMobile()) {
+        window.scrollTo(0, 0);
+        // element.scrollIntoView({behavior: 'smooth'});
+      } else {
+        window.scrollTo({top: y, behavior: 'smooth'});
+      }
+
+      const cssClassQuerySelectorsForOuterCard = Array.from(document.querySelectorAll('.outer-card'));
+      const sortedCssClassQuerySelectorsForOuterCard = cssClassQuerySelectorsForOuterCard.sort();
+      this.focusElementByChar(hash, sortedCssClassQuerySelectorsForOuterCard);
+    }
   }
 
   initEmptyAlphabet(): any[] {
@@ -234,6 +263,7 @@ export class AlphabeticalOverviewComponent implements OnInit, OnDestroy {
     selectedElement.focus();
   }
 
+  // tslint:disable-next-line:cyclomatic-complexity
   cardContainerOnKeyDown(event: KeyboardEvent): void {
     const fachbegriffe = Array.from(document.querySelectorAll('.outer-card')).sort();
     const charCode = event.key.charCodeAt(0);
@@ -252,7 +282,6 @@ export class AlphabeticalOverviewComponent implements OnInit, OnDestroy {
       } else if (isNumber) {
         this.navigateToChar('0-9');
       }
-
       if (isLetter || isNumber) {
         this.focusElementByChar(event.key, fachbegriffe);
       }

@@ -1,7 +1,8 @@
 <header class="s2m--header">
   <div class="top-header">
     <a routerLink="/">
-      <div class="header-logo"></div>
+      <img class="full-logo hidden md:block" src="./../../assets/images/sign2mint_logo.png"/>
+      <img class="fav-icon block md:hidden" src="./../../assets/images/favicon.png"/>
     </a>
     <div class="menu">
       <app-search-menu></app-search-menu>
@@ -13,7 +14,7 @@
        onclick="return false;">
       <fa-icon [icon]="iconAll"
                class="alle-gebaerden standard"
-               (keydown.enter)="handleOpenAllEntriesByFilter('')" 
+               (keydown.enter)="handleOpenAllEntriesByFilter('')"
                (click)="handleOpenAllEntriesByFilter('')"
                title ="Alle Gebärden"></fa-icon>
     </a>

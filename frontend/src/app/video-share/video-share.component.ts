@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-video-share',
   templateUrl: './video-share.component.html',
-  styleUrls: ['./video-share.component.css']
+  styleUrls: ['./video-share.component.scss']
 })
 export class VideoShareComponent implements OnInit {
 

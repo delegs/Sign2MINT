@@ -50,7 +50,7 @@
           <button
             onclick="return false;"
             *ngIf="fachgebiete"
-            [class.hidden]="!isPreviousButtonVisible"
+            [class.visibility-hidden]="!isPreviousButtonVisible"
             [class.button]="!isMobile"
             [class.buttonMobile]="isMobile"
             tabindex="0" title="Vorherige Fachgebärde"
@@ -71,7 +71,7 @@
           <button
             onclick="return false;"
             *ngIf="fachgebiete"
-            [class.hidden]="!isNextButtonVisible"
+            [class.visibility-hidden]="!isNextButtonVisible"
             [class.button]="!isMobile"
             [class.buttonMobile]="isMobile"
             tabindex="0" title="Nächste Fachgebärde"
@@ -142,7 +142,7 @@
               <ul>
                 <li *ngFor="let fachgebiet of lexiconEntry.fachgebiete"
                     (click)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
-                    class="metadataContentFont color-primary-80 fachgebiet-filter">
+                    class="metadataContentFont text-primary-60 fachgebiet-filter">
                   <fa-icon class="fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiet)></fa-icon>
                   <a href onclick="return false;">{{fachgebiet}}</a>
                 </li>
@@ -239,7 +239,7 @@
             <li *ngFor="let fachgebiet of currentLexiconEntry.fachgebiete"
                 (click)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
                 (keydown.enter)="navigateToUrl('/entries',{fachgebiet : fachgebiet})"
-                class="metadataContentFont color-primary-80 fachgebiet-filter" tabindex="0">
+                class="metadataContentFont text-primary-60 fachgebiet-filter" tabindex="0">
               <fa-icon class="fachgebietIcon" [icon]=getIconForFachgebiet(fachgebiet)></fa-icon>
               <a href onclick="return false;">{{fachgebiet}}</a>
             </li>

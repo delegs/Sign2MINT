@@ -1,11 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
+import {AppSettings} from '../app.settings';
+import {SearchContext} from '../material/searchContext';
+import {SearchMode} from '../values/searchMode';
+import {LocalStorageService} from '../services/local-storage.service';
 
 @Component({
   selector: 'app-entry-not-found',
   templateUrl: './entry-not-found.component.html',
-  styleUrls: ['./entry-not-found.component.css']
+  styleUrls: ['./entry-not-found.component.scss']
 })
 export class EntryNotFoundComponent implements OnInit, OnDestroy {
 
@@ -14,7 +18,9 @@ export class EntryNotFoundComponent implements OnInit, OnDestroy {
   subscriptionEvent: Subscription;
 
   constructor(
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private localStorageService: LocalStorageService) {
   }
 
   ngOnInit(): void {
@@ -27,6 +33,11 @@ export class EntryNotFoundComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // prevent memory leak when component destroyed
     this.subscriptionEvent.unsubscribe();
+  }
+
+  navigateToSearch(): void {
+    this.localStorageService.set(AppSettings.LocalStorageSearchContext, new SearchContext(SearchMode.Text));
+    this.router.navigate([`search/text`]);
   }
 
 }

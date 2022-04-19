@@ -1,5 +1,22 @@
-<app-header></app-header>
-<div class="search-content bottom-content-container">
-    <h1 *ngIf="!id"> Keine Treffer für "{{fachbegriff}}" gefunden!</h1>
-    <h1 *ngIf="id"> Keine Treffer für ID {{id}} mit dem Fachbegriff {{fachbegriff}} gefunden!</h1>
+<div class="bg-gradient">
+  <div id="pattern" class="bg-image">
+    <div class="search-content bottom-content-container flex justify-center">
+      <div class="block max-w-2xl mx-4 lg:mx-auto pb-6 pt-8">
+        <object type="image/svg+xml" width="300px" data="../../assets/images/404-Hands.svg"
+                class="block mx-auto"></object>
+        <h2 class="text-center text-primary-70 mt-2 mb-0">Das konnten wir leider nicht finden</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="search-content bottom-content-container flex justify-center">
+  <div class="flex items-center flex-col max-w-2xl mt-8 mx-4 lg:mx-auto">
+    <p>
+      Hast du die URL kopiert oder bist von einer Suchmaschine gekommen? <br/>
+      Dann suche deinen Begriff doch einfach nochmal mit unserer <a (click)="navigateToSearch()">Wortsuche</a>
+    </p>
+    <p class="text-grey-60 mt-4 text-center">
+      Aufgrund von langweiligem technischen Kram benötigen wir eine genaue ID für jeden Begriff um ihn der richtigen Variante zuzuordnen 😃
+    </p>
+  </div>
 </div>

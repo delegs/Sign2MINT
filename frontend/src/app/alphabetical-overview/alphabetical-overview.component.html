@@ -1,30 +1,25 @@
 <div class="bottom-content-container">
-  <div class="filterHeader">
-    <div>
-      <fa-icon *ngIf="currentFachgebiet === 'Alle Gebärden'" [icon]="getIconForFachgebiet(currentFachgebiet)" class="alle-gebaerden"></fa-icon>
-      <fa-icon *ngIf="currentFachgebiet !== 'Alle Gebärden'" [icon]="getIconForFachgebiet(currentFachgebiet)" class="{{currentFachgebiet}}"></fa-icon>
-      <h2>{{currentFachgebiet}}</h2>
+  <div id="overview-top" class="sticky-container backdrop-filter backdrop-blur">
+    <div class="filterHeader">
+      <div>
+        <fa-icon *ngIf="currentFachgebiet === 'Alle Gebärden'" [icon]="getIconForFachgebiet(currentFachgebiet)"
+                 class="alle-gebaerden"></fa-icon>
+        <fa-icon *ngIf="currentFachgebiet !== 'Alle Gebärden'" [icon]="getIconForFachgebiet(currentFachgebiet)"
+                 class="{{currentFachgebiet}}"></fa-icon>
+        <h2>{{currentFachgebiet}}</h2>
+      </div>
+      <div class="entryCount">
+        {{currentEntryCount}}
+      </div>
     </div>
-    <div class="entryCount">
-      {{currentEntryCount}}
+    <div class="hidden md:block">
+      <ng-container *ngTemplateOutlet="navContainer"></ng-container>
     </div>
   </div>
 
-  <div class="mainContainer">
+  <div class="mainContainer flex flex-row">
 
-    <div class="navigationContainer" id="navigationContainer" tabindex="0"
-         (focus)="navigationContainerOnFocus()"
-         (keydown.arrowRight)="navigationContainerOnArrowKeyDown(true)"
-         (keydown.arrowLeft)="navigationContainerOnArrowKeyDown(false)">
-      <div *ngFor="let char of alphabet" [ngClass]="{'highlighted-letter': activeLetter.includes(char.character)}"
-           (click)="navigateToChar(char.character)"
-           (keydown.enter)="navigateToChar(char.character)"
-           class="letterWrapper" tabindex="-1">
-        <a class="caption" onclick="return false;" href>{{char.character}}</a>
-      </div>
-    </div>
-
-    <div (scroll)="onScrollMobile()" class="card-container" tabindex="0"
+    <div (scroll)="onScrollMobile()" class="card-container flex-grow" tabindex="0"
          (focus)="cardContainerOnFocus()"
          (keydown)="cardContainerOnKeyDown($event)">
       <div *ngFor="let char of alphabet" class="card-category">
@@ -40,5 +35,23 @@
         </div>
       </div>
     </div>
+
+    <div class="block md:hidden">
+      <ng-container *ngTemplateOutlet="navContainer"></ng-container>
+    </div>
   </div>
 </div>
+
+<ng-template #navContainer>
+  <div class="navigationContainer__content" id="navigationContainer" tabindex="0"
+       (focus)="navigationContainerOnFocus()"
+       (keydown.arrowRight)="navigationContainerOnArrowKeyDown(true)"
+       (keydown.arrowLeft)="navigationContainerOnArrowKeyDown(false)">
+    <div *ngFor="let char of alphabet" [ngClass]="{'highlighted-letter': activeLetter.includes(char.character)}"
+         (click)="navigateToChar(char.character)"
+         (keydown.enter)="navigateToChar(char.character)"
+         class="letterWrapper" tabindex="-1">
+      <a class="caption" onclick="return false;" href>{{char.character}}</a>
+    </div>
+  </div>
+</ng-template>

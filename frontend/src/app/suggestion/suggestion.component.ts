@@ -7,7 +7,7 @@ import {EmailService} from '../services/email.service';
 @Component({
   selector: 'app-suggestion',
   templateUrl: './suggestion.component.html',
-  styleUrls: ['./suggestion.component.css']
+  styleUrls: ['./suggestion.component.scss']
 })
 export class SuggestionComponent implements OnInit {
   @ViewChild('captchaElem') captcha: ReCaptcha2Component;

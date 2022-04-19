@@ -35,8 +35,9 @@
               fill-rule="evenodd"/>
       </svg>
       <span class="text-xl font-medium">Deutsch<fa-icon [icon]="faArrowRight"></fa-icon>DGS</span>
-      <span class="font-light">Du kannst auch von DGS nach Deutsch suchen. Probiere unsere Gebärdensuche!</span>
-
+      <span class="font-light">Du kannst auch von DGS nach Deutsch suchen. Probiere unsere
+        <a routerLink="/search/gebaerdensuche"><u>Gebärdensuche</u></a>!
+      </span>
     </div>
     <div *ngIf="searchContext.textInput.length > 0">
       <div *ngIf="!showSuggestionText" class="resultCount">
