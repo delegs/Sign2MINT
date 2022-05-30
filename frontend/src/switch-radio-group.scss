@@ -34,7 +34,7 @@ $border-color:grey-40;
 }
 
 .switch-radio-group > input:checked + label {
-  @apply bg-primary-10;
+  @apply bg-primary-20;
   @apply text-primary-70;
   border-color: transparent;
   border: 1px solid var(--primary-60);

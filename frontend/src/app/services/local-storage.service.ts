@@ -8,48 +8,30 @@ import {LocalStorageEventArgs} from '../material/localStorageEventArgs';
 })
 export class LocalStorageService {
 
-  localStorage: Storage;
+  storage: any = {};
   localStorageChangedEvent = new Subject();
 
-  constructor() {
-    this.localStorage = window.localStorage;
-  }
-
   get(key: string): any {
-    try {
-      return this.isLocalStorageSupported ? JSON.parse(this.localStorage.getItem(key)) : null;
-    } catch (exception) {
-      return null;
-    }
+    return this.storage[key] ?? null;
   }
 
-  set(key: string, value: any): boolean {
-    try {
-      if (this.isLocalStorageSupported) {
-        this.localStorage.setItem(key, JSON.stringify(value));
-        const eventArgs = LocalStorageEventArgs.create(LocalStorageOperation.Set, key, value);
-        this.localStorageChangedEvent.next(eventArgs);
-      }
-    } catch (exception) {
-      return false;
-    }
-    return true;
+  set(key: string, value: any): void {
+    this.storage[key] = value;
+    const event: LocalStorageEventArgs = {
+      operation: LocalStorageOperation.Set,
+      key,
+      value,
+    };
+    this.localStorageChangedEvent.next(event);
   }
 
-  remove(key: string): boolean {
-    try {
-      if (this.isLocalStorageSupported) {
-        this.localStorage.removeItem(key);
-        const eventArgs = LocalStorageEventArgs.create(LocalStorageOperation.Set, key, undefined);
-        this.localStorageChangedEvent.next(eventArgs);
-      }
-    } catch (exception) {
-      return false;
-    }
-    return true;
-  }
-
-  get isLocalStorageSupported(): boolean {
-    return !!this.localStorage;
+  remove(key: string): void {
+    delete this.storage[key];
+    const event: LocalStorageEventArgs = {
+      operation: LocalStorageOperation.Remove,
+      key,
+      value: null,
+    };
+    this.localStorageChangedEvent.next(event);
   }
 }

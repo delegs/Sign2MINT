@@ -37,6 +37,8 @@ import {
   faLongArrowRight,
   faArrowRight,
   faArrowLeft,
+  faUndo,
+  faSearch,
 } from '@fortawesome/pro-light-svg-icons';
 
 export class LightIcons {
@@ -79,5 +81,6 @@ export class LightIcons {
   public static readonly faTimes = faTimes;
   public static readonly faUniversity = faUniversity;
   public static readonly faLongArrowRight = faLongArrowRight;
-
+  public static readonly undo = faUndo;
+  public static readonly search = faSearch;
 }

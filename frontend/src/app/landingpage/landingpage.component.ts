@@ -22,6 +22,12 @@ export class LandingpageComponent implements OnInit {
   iconForAll = LightIcons.faSignLanguage;
   fachgebiete = Fachgebiete.getAll();
 
+  words = ['Eis', 'letal', 'Bär', 'Lava', 'Lot', 'aerob', 'Icon', 'Agile', 'Quant', 'RNA'];
+  wordSizes = ['small', 'large', 'small', 'medium', 'small', 'large'];
+  wordSizesSmMd = ['small', 'large', 'medium', 'large', 'medium', 'large', 'medium', 'large'];
+  wordSizesLg = ['small', 'large', 'medium', 'small',
+    'large', 'small', 'medium', 'small', 'medium', 'large'];
+
   constructor(
     private router: Router,
     private lexiconEntryService: LexiconEntryService,

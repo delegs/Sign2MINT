@@ -323,8 +323,6 @@ export class EntryDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         : `search/text/`;
 
       this.router.navigate([navigateURL]);
-    } else if (this.fachgebiete.length === 1) {
-      this.router.navigate(['/entries', this.fachgebiete[0]]);
     } else {
       this.router.navigateByUrl('/entries');
     }

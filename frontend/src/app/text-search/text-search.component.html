@@ -1,23 +1,28 @@
 <header class="header">
-  <form>
-    <button class="back" (mousedown)="backToPreviousSite()">
-      <fa-icon [icon]="faChevronLeft"></fa-icon>
-    </button>
-    <input
-      #searchInput
-      id="searchInput"
-      type="text"
-      name="searchInput"
-      autocomplete="off"
-      placeholder="Wortsuche"
-      (input)="onInput()"
-      (keydown.enter)="searchInput_OnEnter($event)"
-      [(ngModel)]="searchContext.textInput">
-    <button class="clear" *ngIf="isClearButtonVisible" (click)="clearSearch()"
-            onclick="document.getElementById('searchInput').value = ''">
-      <fa-icon [icon]="faTimes" style="font-size: 1rem"></fa-icon>
-    </button>
-  </form>
+  <div class="inner-background">
+    <form>
+      <button class="back" (mousedown)="backToPreviousSite()">
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+      </button>
+      <div class="search-container">
+        <fa-icon [icon]="searchIcon" class="input-icon text-grey-60 left-6 hidden md:block"></fa-icon>
+        <input
+          #searchInput
+          id="searchInput"
+          type="text"
+          name="searchInput"
+          autocomplete="off"
+          placeholder="Wortsuche"
+          (input)="onInput()"
+          (keydown.enter)="searchInput_OnEnter($event)"
+          [(ngModel)]="searchContext.textInput">
+        <button class="clear input-icon right-6" *ngIf="isClearButtonVisible" (click)="clearSearch()"
+                onclick="document.getElementById('searchInput').value = ''">
+          <fa-icon [icon]="faTimes" style="font-size: 1rem"></fa-icon>
+        </button>
+      </div>
+    </form>
+  </div>
 </header>
 
 <div class="bottom-content-container">

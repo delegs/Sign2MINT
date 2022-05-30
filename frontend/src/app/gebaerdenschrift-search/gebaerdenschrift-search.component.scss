@@ -41,6 +41,10 @@ form {
   align-items: center;
 }
 
+header-button fa-icon {
+  font-size: 1rem;
+}
+
 #gebaerdensucheInput {
   padding-left: 0.5rem;
   width: calc(100% - 0.5rem);
@@ -86,21 +90,13 @@ app-gebaerden-tastatur {
 .searchResultHeader {
   display: flex;
   justify-content: space-between;
-  margin: 4rem 0.5rem 1rem 1rem;
+  align-items: center;
+  margin: 4rem 1rem 1rem 1rem;
 }
 
 .searchResultHeader div {
   display: flex;
   cursor: default;
-}
-
-.searchResultHeader fa-icon {
-  font-style: normal;
-  font-weight: 300;
-  font-size: 1.625rem;
-  line-height: 26px;
-  align-content: center;
-  margin: 0 0.5rem;
 }
 
 .searchResultFooter {
@@ -298,7 +294,7 @@ app-gebaerden-tastatur {
   .clear {
     right: unset;
     position: unset;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     margin-left: 1rem;
     margin-right: 0.5rem;
     cursor: pointer;

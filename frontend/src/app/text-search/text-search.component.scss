@@ -10,6 +10,18 @@
   justify-content: center;
 }
 
+.inner-background {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 form {
   position: relative;
   display: flex;
@@ -131,7 +143,40 @@ input {
   text-anchor: middle;
 }
 
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+$large-header-height:9rem;
+
 @screen md {
+
+  input {
+    width: 100%;
+    height: 3.75rem;
+    border-radius: 1rem;
+    font-size: 1.125rem;
+    background: var(--white);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 15px 0 #31827A40;
+    padding: 2rem 2rem 2rem 3.75rem;
+  }
+
+  .search-container {
+    width: 40rem;
+    position: relative;
+  }
+
+  input:focus {
+    outline: none;
+    border: 1px solid transparent;
+  }
+
+  .back {
+    display: none;
+  }
 
   .card-container {
     width: calc(100% - 2rem);
@@ -140,6 +185,54 @@ input {
   .searchResult {
     grid-template-columns: 46% 46%;
     justify-content: space-between;
+  }
+
+  .searchResultHeader {
+    margin: 5rem 1rem 2rem;
+  }
+
+  .header {
+    box-shadow: unset;
+    height: #{$large-header-height};
+    position: relative;
+    z-index: 0;
+  }
+
+  .header:before {
+    content: "";
+    position: absolute;
+    height: #{$large-header-height};
+    width: 100%;
+    z-index: -1;
+    background: var(--primary-50);
+    mask-image: url("../../assets/images/Fachbereiche Pattern.svg");
+    mask-size: 125px;
+    opacity: 0.75;
+  }
+
+  .inner-background {
+    width: 100%;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding-top: #{$large-header-height};
+    background: linear-gradient(91.92deg, rgba(203, 219, 42, 0.75) 0%, rgba(86, 159, 74, 0.75) 52.94%, rgba(25, 102, 94, 0.75) 99.65%);
+  }
+
+  .inner-background:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: #{$large-header-height};
+    width: 100%;
+    z-index: 0;
+    background: url("../../assets/images/Suche-Fingeralphabet.png");
+    background-repeat: no-repeat;
+    background-position: center 1rem;
+    background-size: 420px auto;
   }
 
 }
@@ -154,16 +247,6 @@ input {
   .searchResult {
     grid-template-columns: 42% 42%;
     justify-content: space-between;
-  }
-
-
-  .searchResultHeader {
-    margin: 5rem 1rem 2rem;
-  }
-
-  .header {
-    box-shadow: unset;
-    padding-top: 1rem;
   }
 }
 

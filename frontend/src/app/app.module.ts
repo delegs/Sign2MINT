@@ -35,6 +35,7 @@ import {ExcelImportComponent} from './excel-import/excel-import.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 import { IconSpacerComponent } from './icon-spacer/icon-spacer.component';
+import { PhotoGridComponent } from './photo-grid/photo-grid.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { IconSpacerComponent } from './icon-spacer/icon-spacer.component';
     ExcelImportComponent,
     SafeHtmlPipe,
     IconSpacerComponent,
+    PhotoGridComponent,
   ],
   imports: [
     BrowserModule,

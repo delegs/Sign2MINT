@@ -46,7 +46,11 @@ module.exports = {
         90: 'var(--primary-90)',
       },
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        'serif': ['Merriweather'],
+      },
+    },
   },
   variants: {
     extend: {},

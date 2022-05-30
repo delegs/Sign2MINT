@@ -35,6 +35,7 @@ export class GebaerdenschriftSearchComponent implements OnInit, OnDestroy, Confi
   faChevronDown = LightIcons.faChevronDown;
   faChevronLeft = LightIcons.faChevronLeft;
   faTimes = LightIcons.faTimes;
+  faUndo = LightIcons.undo;
   faCheck = SolidIcons.checked;
   faSquare = LightIcons.faSquare;
   faCheckCircle = LightIcons.faCheckCircle;

@@ -20,6 +20,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://sign2mint.de",
                         "https://sign2mint.com",
                         "https://sign2mint.org",
+                        "https://www.sign2mint.de",
+                        "https://www.sign2mint.com",
+                        "https://www.sign2mint.org",
                         "https://test.sign2mint.de",
                         "https://test.sign2mint.com",
                         "https://test.sign2mint.org");

@@ -29,6 +29,7 @@ export class TextSearchComponent implements OnInit, AfterViewInit, ConfiguresHea
   faChevronLeft = LightIcons.faChevronLeft;
   faTimes = LightIcons.faTimes;
   faArrowRight = RegularIcons.faLongArrowRight;
+  searchIcon = LightIcons.search;
   isClearButtonVisible = false;
   searchContext = new SearchContext(SearchMode.Text);
   lexikonentryCount = 0;
@@ -38,7 +39,7 @@ export class TextSearchComponent implements OnInit, AfterViewInit, ConfiguresHea
 
   showHeaderDesktop = true;
   showHeaderMobile = false;
-  showHeaderTablet = false;
+  showHeaderTablet = true;
 
   get searchResultText(): string {
 

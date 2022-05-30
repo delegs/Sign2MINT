@@ -1,22 +1,19 @@
-a {
-  color: white
-}
+@use "sass:math";
 
-figcaption {
-  text-align: end;
-  font-style: italic;
-  line-height: initial;
-  font-size: 4vw;
-}
-
-figure {
-  margin: 0.5rem 2rem 0;
-}
-
-.imageLogoWrapper {
-  width: 100%;
+.bottom-content-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.logo-text {
+  @apply font-serif;
+  font-size: var(--text-lg);
+  max-width: 16rem;
+  background: linear-gradient(91.92deg, #CBDB2A 0%, #569F4A 65.91%, #19665E 99.65%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 .imageLogoWrapper img {
@@ -38,13 +35,10 @@ figure {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  max-height: 128px;
-  height: 10vh;
-  background: var(--primary-05);
+  background: var(--white);
   font-weight: 400;
-  margin-bottom: 8px;
-  padding: 0.75rem 1rem;
-  line-height: 1rem;
+  @apply p-4;
+  @apply gap-3;
   border-radius: 15px;
   border: 1px solid var(--primary-05);
   text-decoration: none;
@@ -73,13 +67,6 @@ figure {
   margin-bottom: 0.25rem;
 }
 
-.filter-bar {
-  display: grid;
-  grid-template-rows: auto auto;
-  margin-bottom: 2rem;
-  padding: 0 5%
-}
-
 .fachgebiet-wrapper {
   display: grid;
   grid-template-rows: repeat(6, max-content);
@@ -87,7 +74,7 @@ figure {
 
 .filter-button {
   cursor: pointer;
-  background: var(--primary-05);
+  background: var(--white);
   color: var(--primary-60);
   font-weight: 400;
   margin-bottom: 0.75rem;
@@ -112,39 +99,255 @@ figure {
   width: 2rem;
 }
 
+.responsive-card {
+  @apply px-4 pt-8;
+  @apply md:mx-4 pb-4 md:rounded-2xl md:mt-8;
+  @apply lg:p-8 lg:mx-8 lg:mt-12;
+}
+
+.fachgebaerden-card {
+  @apply flex flex-col items-center mb-10 md:mb-16 lg:mb-8;
+  
+  background: linear-gradient(180deg, #D7EAE8 67.71%, rgba(215, 234, 232, 0) 100%);
+
+  @screen md {
+    background: #D7EAE8;
+  }
+}
+
+// Word Circle
+
+@mixin place-on-circle($rot, $width-radius, $height-radius, $jitter-amount) {
+  $rot-radians: $rot * math.$pi / 180;
+  $jitter: 2 * math.sin(4*$rot-radians);
+  transform:
+    rotate($rot * 1deg)
+    translate((math.cos($rot-radians*2) + 1) * ($width-radius - $height-radius) / 2 + $height-radius - $jitter * $jitter-amount)
+    rotate($rot * -1deg);
+}
+
+@mixin on-circle($item-count, $circle-width-bla, $circle-height-bla, $starting-angle: 0) {
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;
+
+  > *:not([style*="display: none"]) {
+    position: absolute;
+    top:  50%;
+    left: 50%;
+
+    $width-radius: $circle-width-bla / 2;
+    $height-radius: $circle-height-bla / 2;
+    $angle: (360 / $item-count);
+    $rot: $starting-angle;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        @include place-on-circle($rot: $rot, $width-radius: $width-radius, $height-radius: $height-radius, $jitter-amount: 0)
+      }
+
+      @screen lg {
+        &:nth-of-type(#{$i}) {
+          @include place-on-circle($rot: $rot, $width-radius: $width-radius, $height-radius: $height-radius, $jitter-amount: 1)
+        }
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
+
+$circle-width: 19rem;
+$circle-height: 15rem;
+
+$circle-width-sm: 30rem;
+$circle-height-sm: 20rem;
+
+$circle-width-md: 35rem;
+$circle-height-md: 22rem;
+
+$circle-width-lg: 50rem;
+$circle-height-lg: 30rem;
+
+.word-circle {
+  @include on-circle($item-count: 6, $circle-width-bla: $circle-width, $circle-height-bla: $circle-height, $starting-angle: 20);
+  position: absolute;
+  width: $circle-width;
+  height: $circle-height;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.interactive-logo-container {
+  width: $circle-width;
+  height: $circle-height + 8rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-bubble {
+  border-radius: 50%;
+  background: var(--primary-10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  @apply font-light;
+  @apply text-primary-50;
+}
+
+/* Pulse */
+@-webkit-keyframes hvr-pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+@keyframes hvr-pulse {
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  75% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+.hvr-pulse {
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+}
+.hvr-pulse:hover, .hvr-pulse:focus, .hvr-pulse:active {
+  -webkit-animation-name: hvr-pulse;
+  animation-name: hvr-pulse;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+$word-bubble-small-diameter:2.75rem;
+$word-bubble-medium-diameter:3.375rem;
+$word-bubble-large-diameter:4.125rem;
+
+$word-bubble-small-diameter-md:3.375rem;
+$word-bubble-medium-diameter-md:4.125rem;
+$word-bubble-large-diameter-md:6rem;
+
+$word-bubble-small-diameter-lg:3.75rem;
+$word-bubble-medium-diameter-lg:6rem;
+$word-bubble-large-diameter-lg:8.75rem;
+
+.word-bubble-small {
+  width: $word-bubble-small-diameter;
+  height: $word-bubble-small-diameter;
+  margin: -($word-bubble-small-diameter / 2);
+  font-size: 0.75rem;
+}
+
+.word-bubble-medium {
+  width: $word-bubble-medium-diameter;
+  height: $word-bubble-medium-diameter;
+  margin: -($word-bubble-medium-diameter / 2);
+  font-size: 1rem;
+}
+
+.word-bubble-large {
+  width: $word-bubble-large-diameter;
+  height: $word-bubble-large-diameter;
+  margin: -($word-bubble-large-diameter / 2);
+  font-size: 1.125rem;
+}
+
+@screen sm {
+  .word-circle {
+    @include on-circle($item-count: 8, $circle-width-bla: $circle-width-sm, $circle-height-bla: $circle-height-sm);
+    width: $circle-width-sm;
+    height: $circle-height-sm;
+  }
+
+  .interactive-logo-container {
+    width: $circle-width;
+    height: $circle-height + 14rem;
+  }
+
+  .logo-text {
+    font-size: var(--text-2xl);
+    line-height: normal;
+    max-width: unset;
+  }
+}
+
 /*Media-Queries*/
 @screen md {
 
+  .word-circle {
+    @include on-circle($item-count: 8, $circle-width-bla: $circle-width-md, $circle-height-bla: $circle-height-md, $starting-angle: -15);
+    width: $circle-width-md;
+    height: $circle-height-md;
+  }
+
+  .logo-text {
+    max-width: 25rem;
+    font-size: var(--text-3xl);
+  }
+
+  .interactive-logo-container {
+    width: $circle-width-md + 10rem;
+    height: $circle-height-md + 12rem;
+  }
+
+  .word-bubble-small {
+    width: $word-bubble-small-diameter-md;
+    height: $word-bubble-small-diameter-md;
+    margin: -($word-bubble-small-diameter-md / 2);
+  }
+
+  .word-bubble-medium {
+    width: $word-bubble-medium-diameter-md;
+    height: $word-bubble-medium-diameter-md;
+    margin: -($word-bubble-medium-diameter-md / 2);
+  }
+
+  .word-bubble-large {
+    width: $word-bubble-large-diameter-md;
+    height: $word-bubble-large-diameter-md;
+    margin: -($word-bubble-large-diameter-md / 2);
+  }
+
+  .bottom-content-container {
+    display: flex;
+    flex-direction: column;
+  }
+
   .imageLogoWrapper img {
     width: 71%;
-  }
-
-  figure {
-    position: relative;
-    margin: 5rem 0;
-    max-width: 70%;
-  }
-
-  figcaption {
-    position: absolute;
-    bottom: -1em;
-    right: 0;
-    font-size: min(1.25rem, 1.95vw);
   }
 
   .search-container {
     max-width: 68.5%;
   }
 
-  .filter-bar {
-    margin: 0 auto 0.5rem;
-    max-width: 68.5%;
+  .search-button {
+    flex-direction: row;
+    @apply gap-4;
+    @apply p-4;
   }
 
   .fachgebiet-wrapper {
-    grid-template-columns: 49.2% 49.2%;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, max-content);
-    column-gap: 1.6%;
+    column-gap: 2rem;
   }
 
   .filter-button {
@@ -157,18 +360,56 @@ figure {
 }
 
 @screen lg {
-  .gridContainer {
-    display: grid;
-    grid-template-areas: "leftBackground content rightBackground";
-    grid-template-columns: auto min(1024px, 90%) auto;
-    grid-template-rows: auto;
+
+  .word-circle {
+    @include on-circle($item-count: 10, $circle-width-bla: $circle-width-lg, $circle-height-bla: $circle-height-lg);
+    width: $circle-width-lg;
+    height: $circle-height-lg;
   }
 
-  .backgroundLeft {
-    grid-area: leftBackground;
-    background: #106C65;
-    box-shadow: 15px 0 0 0 #2F9C91;
-    min-height: calc(100vh - 127px);
+  .interactive-logo-container {
+    width: $circle-width-lg + 10rem;
+    height: $circle-height-lg + 16rem;
+  }
+
+  .word-bubble-small {
+    width: $word-bubble-small-diameter-lg;
+    height: $word-bubble-small-diameter-lg;
+    margin: -($word-bubble-small-diameter-lg / 2);
+    font-size: 1.25rem;
+  }
+
+  .word-bubble-medium {
+    width: $word-bubble-medium-diameter-lg;
+    height: $word-bubble-medium-diameter-lg;
+    margin: -($word-bubble-medium-diameter-lg / 2);
+    font-size: 1.5rem;
+  }
+
+  .word-bubble-large {
+    width: $word-bubble-large-diameter-lg;
+    height: $word-bubble-large-diameter-lg;
+    margin: -($word-bubble-large-diameter-lg / 2);
+    font-size: 2rem;
+  }
+
+  .logo-text {
+    font-size: 3rem;
+    max-width: 40rem;
+    line-height: normal;
+  }
+
+  .search-button {
+    font-size: var(--text-lg);
+    flex-direction: row;
+    @apply gap-6;
+    @apply py-6;
+    @apply px-8;
+  }
+
+  .search-button svg {
+    width: 32px;
+    height: 32px;
   }
 
   .backgroundRight {
@@ -184,12 +425,6 @@ figure {
     font-weight: 400;
     text-align: center;
     color: var(--primary-60);
-  }
-
-  .largeTextStyle {
-    font-size: var(--text-2xl);
-    font-weight: bold;
-    line-height: 2.5rem;
   }
 
   .mediumTextStyle {
@@ -208,18 +443,8 @@ figure {
     grid-row-gap: 5rem;
   }
 
-  .imageContainer {
-    grid-column: 1 / span 2;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-  .imageLogoWrapper {
-    display: flex;
-    flex-direction: column;
-    grid-row: 1;
-    margin-top: 2rem;
-    width: 71%;
+  .logo-caption {
+    font-size: var(--text-lg);
   }
 
   .imageLogoWrapper span {
@@ -249,34 +474,6 @@ figure {
     cursor: pointer;
   }
 
-  .textSearch {
-    grid-row: 2;
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--primary-05);
-    border-radius: 15px;
-    border: white 1px solid;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    fill: var(--primary-60);
-    height: 11.25rem;
-    margin-left: 10%;
-    margin-right: 10%;
-    cursor: pointer;
-  }
-
-  .filter-bar {
-    grid-row: 3;
-    grid-column: 1 /span 2;
-    margin-top: 1rem;
-    padding: 0;
-    margin-left: 5%;
-    margin-right: 5%;
-    max-width: 100%;
-  }
-
   .entry-count-text {
     align-self: center;
     font-size: 1.375rem;
@@ -291,9 +488,5 @@ figure {
   .filter-button {
     font-size: var(--text-lg);
     line-height: normal;
-  }
-
-  .fachgebiet-wrapper {
-    margin-bottom: 7.5rem;
   }
 }

@@ -1,0 +1,198 @@
+@use "sass:map";
+@use "sass:math";
+
+$partSize: 100px;
+$margins: 2px;
+$cols: 3;
+$rows: 2;
+$max-num-of-images: 24;
+$perspective: 700px;
+$transTime: 0.3s;
+$border-radius: 5px;
+$shadow-size: 10px;
+$gallery-bg: transparent;
+
+$breakpoints: [
+("size": 400px, "cols": 3, "rows": 2, "partSize": 110px),
+
+("size": 460px, "cols": 4, "rows": 3, "partSize": 100px),
+("size": 520px, "cols": 4, "rows": 3, "partSize": 110px),
+
+("size": 600px, "cols": 5, "rows": 4, "partSize": 100px),
+("size": 690px, "cols": 5, "rows": 4, "partSize": 110px),
+
+("size": 768px, "cols": 6, "rows": 4, "partSize": 110px),
+("size": 875px, "cols": 6, "rows": 4, "partSize": 120px),
+("size": 1024px, "cols": 6, "rows": 4, "partSize": 130px),
+];
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:host {
+  --numberOfRows: #{$rows};
+  --numberOfColumns: #{$cols};
+
+
+  @each $breakpoint in $breakpoints {
+    @media (min-width: map.get($breakpoint, "size")) {
+      --numberOfRows: #{map.get($breakpoint, "rows")};
+      --numberOfColumns: #{map.get($breakpoint, "cols")};
+    }
+  }
+}
+
+
+.photo-grid {
+
+  &__gallery {
+    display: grid;
+    grid-template-columns: repeat($cols, 1fr);
+    @each $breakpoint in $breakpoints {
+      @media (min-width: map.get($breakpoint, "size")) {
+        grid-template-columns: repeat(map.get($breakpoint, "cols"), 1fr);
+      }
+    }
+
+    padding: $margins;
+    flex-shrink: 0;
+
+    background: $gallery-bg;
+
+    perspective: $perspective;
+    border-radius: $border-radius;
+  }
+
+  &__part {
+    position: relative;
+    float: left;
+
+    width: $partSize;
+    height: $partSize;
+    @each $breakpoint in $breakpoints {
+      @media (min-width: map.get($breakpoint, "size")) {
+        width: map.get($breakpoint, "partSize");
+        height: map.get($breakpoint, "partSize");
+      }
+    }
+
+    margin: $margins;
+
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+    transition: all $transTime ease-in-out;
+
+    &:hover .photo-grid__part-front {
+      box-shadow: 0 0 $shadow-size var(--white);
+      transform: scale(0.95);
+      opacity: 1;
+      filter: brightness(1.1);
+
+      &:after {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__part-front, &__part-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    backface-visibility: hidden;
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+
+  &__part-front {
+    background-color: lightslategrey;
+    background-size: cover;
+    background-position: center;
+
+    transform: rotateX(0deg);
+    transition: all $transTime / 1.5 ease;
+    opacity: 1;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: var(--primary-70);
+
+      content: "";
+      opacity: 0.1;
+      transition: all $transTime / 1.5 ease;
+    }
+  }
+
+  &__part-back {
+    transform: rotateY(180deg) rotateX(0deg);
+  }
+
+  &__part-back-inner {
+    width: $partSize * $cols + $margins * ($cols - 1) * 2;
+    height: $partSize * $rows + $margins * ($rows - 1) * 2;
+    @each $breakpoint in $breakpoints {
+      @media (min-width: map.get($breakpoint, "size")) {
+        width: map.get($breakpoint, "partSize") * map.get($breakpoint, "cols") + $margins * (map.get($breakpoint, "cols") - 1) * 2;
+        height: map.get($breakpoint, "partSize") * map.get($breakpoint, "rows") + $margins * (map.get($breakpoint, "rows") - 1) * 2;
+      }
+    }
+
+    background-size: cover;
+    background-position: center;
+
+    backface-visibility: hidden;
+  }
+}
+
+@for $imageIndex from 0 through $cols * $rows - 1 {
+  #photo-grid__part-#{$imageIndex} {
+    display: block;
+  }
+
+  #photo-grid__part-#{$imageIndex} .photo-grid__part-back-inner {
+    transform: translate( -($imageIndex % $cols) * ($partSize + $margins * 2), -(math.floor($imageIndex / $cols)) * ($partSize + $margins * 2) );
+  }
+}
+
+@for $imageIndex from $cols * $rows through $max-num-of-images {
+  #photo-grid__part-#{$imageIndex} {
+    display: none;
+  }
+}
+
+@each $breakpoint in $breakpoints {
+  @media (min-width: map.get($breakpoint, "size")) {
+    @for $imageIndex from 0 through map.get($breakpoint, "cols") * map.get($breakpoint, "rows") - 1 {
+
+      #photo-grid__part-#{$imageIndex} {
+        display: block;
+      }
+
+      #photo-grid__part-#{$imageIndex} .photo-grid__part-back-inner {
+        display: block;
+        transform: translate( -($imageIndex % map.get($breakpoint, "cols")) * (map.get($breakpoint, "partSize") + $margins * 2), -(math.floor($imageIndex / map.get($breakpoint, "cols"))) * (map.get($breakpoint, "partSize") + $margins * 2) );
+      }
+    }
+    @for $imageIndex from map.get($breakpoint, "cols") * map.get($breakpoint, "rows") through $max-num-of-images {
+      #photo-grid__part-#{$imageIndex} {
+        display: none;
+      }
+    }
+  }
+}
+
+.show-front {
+  transform: none;
+}

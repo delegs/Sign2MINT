@@ -1,0 +1,8 @@
+<div class="photo-grid__gallery">
+  <div *ngFor="let cell of gridArray" id="photo-grid__part-{{cell.index}}" class="show-front photo-grid__part">
+    <div class="photo-grid__part-back" (click)="toggleGrid($event, cell)">
+      <div class="photo-grid__part-back-inner"></div>
+    </div>
+    <div class="photo-grid__part-front" style="background-image: url('{{cell.image.thumbnail}}')" (click)="toggleGrid($event, cell)"></div>
+  </div>
+</div>
